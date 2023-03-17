@@ -2,7 +2,7 @@
 
 .Header {
   width: 100%;
-  background-color: $color2;
+  background-color: $colorBgHeader;
   display: flex;
   justify-content: center;
   padding: 10px 0;
@@ -27,7 +27,7 @@
 
   .link {
     text-decoration: none;
-    color: $color3;
+    color: $colorText;
     padding: 3px 5px;
     border-radius: 5px;
     background-color: transparent;
@@ -35,11 +35,11 @@
     transition: background-color .3s ease;
     
     &:hover {
-      background-color: $color4;
+      background-color: $colorPrimary;
     }
 
     &.active {
-      background-color: $color4;
+      background-color: $colorPrimary;
     }
   }
 }

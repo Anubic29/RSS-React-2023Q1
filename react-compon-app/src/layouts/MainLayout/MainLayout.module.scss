@@ -1,4 +1,7 @@
+@import '../../theme/variables.scss';
+
 .content {
   flex: 1 1;
   display: flex;
+  color: $colorText;
 }
