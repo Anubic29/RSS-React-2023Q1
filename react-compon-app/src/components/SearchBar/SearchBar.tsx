@@ -8,7 +8,7 @@ interface SearchBarState {
 }
 
 interface SearchBarProps {
-  onChangeHandler: React.Dispatch<React.SetStateAction<string>>;
+  onChangeHandler: (value: string) => void;
 }
 
 export default class SearchBar extends Component<SearchBarProps, SearchBarState> {
