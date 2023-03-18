@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 
 import styles from './Card.module.scss';
 
@@ -9,23 +9,23 @@ interface CardProps {
   price: string;
 }
 
-function Card(props: CardProps) {
-  return (
-    <div className={styles['card']}>
-      <div className={styles['image-container']}>
-        <img src={props.image} alt="" />
-      </div>
-      <div className={styles['content']}>
-        <h1 className={styles['title']}>{props.title}</h1>
-        <div className={styles['genres']} title={props.genreList.join(', ')}>
-          {props.genreList.join(', ')}
+export default class Card extends Component<CardProps> {
+  render() {
+    return (
+      <div className={styles['card']}>
+        <div className={styles['image-container']}>
+          <img src={this.props.image} alt="" />
         </div>
-        <div className={styles['price-block']}>
-          <div className={styles['price']}>{props.price} $</div>
+        <div className={styles['content']}>
+          <h1 className={styles['title']}>{this.props.title}</h1>
+          <div className={styles['genres']} title={this.props.genreList.join(', ')}>
+            {this.props.genreList.join(', ')}
+          </div>
+          <div className={styles['price-block']}>
+            <div className={styles['price']}>{this.props.price} $</div>
+          </div>
         </div>
       </div>
-    </div>
-  );
+    );
+  }
 }
-
-export default Card;
