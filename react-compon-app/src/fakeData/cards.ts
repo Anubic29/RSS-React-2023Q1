@@ -1,9 +1,4 @@
-type CardType = {
-  title: string;
-  image: string;
-  genreList: string[];
-  price: number;
-};
+import { CardType } from '../types/CardType';
 
 export const cards: CardType[] = [
   {
