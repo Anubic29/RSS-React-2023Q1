@@ -28,32 +28,6 @@
   }
 }
 
-.search {
-  position: relative;
-
-  &__icon {
-    font-size: 2rem;
-    position: absolute;
-    top: 50%;
-    left: 5px;
-    transform: translate(0, -50%);
-  }
-
-  &__input {
-    background-color: transparent;
-    color: $colorContentInput;
-    border: 2px solid $colorBgInputDefault;
-    border-radius: 15px;
-    padding: 5px 10px;
-    padding-left: 25px;
-
-    &:focus {
-      outline: none;
-      border-color: $colorBgInputHover;
-    }
-  }
-}
-
 .card-list {
   margin-top: 10px;
   padding-top: 5px;

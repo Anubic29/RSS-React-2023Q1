@@ -1,6 +1,6 @@
 import React, { useMemo, useState } from 'react';
-import { MdSearch } from 'react-icons/md';
 import { Card } from './components';
+import { SearchBar } from '../../components/';
 
 import { cards } from '../../fakeData/cards';
 
@@ -24,14 +24,7 @@ function Main() {
       <div className={styles['content']}>
         <div className={styles['search-container']}>
           <h1 className={styles['title']}>Search:</h1>
-          <div className={styles['search']}>
-            <MdSearch className={styles['search__icon']} />
-            <input
-              type="text"
-              className={styles['search__input']}
-              onChange={(event) => setSearchValue(event.target.value)}
-            />
-          </div>
+          <SearchBar onChangeHandler={setSearchValue} />
         </div>
         <div className={styles['card-list']}>
           {cardsToDisplay.length > 0 ? (
