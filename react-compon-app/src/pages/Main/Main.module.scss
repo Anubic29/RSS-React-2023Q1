@@ -3,11 +3,53 @@
 .main {
   display: flex;
   justify-content: center;
+  flex: 1 1;
+  padding-top: 30px;
 }
 
 .content {
   width: 100%;
   max-width: $maxWidthContent;
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  flex: 1 1;
+}
+
+.search-container {
+  width: 100%;
+  padding-left: 110px;
+  display: flex;
+  align-items: center;
+
+  .title {
+    font-size: 1.8rem;
+    margin-right: 10px;
+  }
+}
+
+.search {
+  position: relative;
+
+  &__icon {
+    font-size: 2rem;
+    position: absolute;
+    top: 50%;
+    left: 5px;
+    transform: translate(0, -50%);
+  }
+
+  &__input {
+    background-color: transparent;
+    color: $colorContentInput;
+    border: 2px solid $colorBgInputDefault;
+    border-radius: 15px;
+    padding: 5px 10px;
+    padding-left: 25px;
+
+    &:focus {
+      outline: none;
+      border-color: $colorBgInputHover;
+    }
+  }
 }
