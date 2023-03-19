@@ -1,4 +1,5 @@
 import React from 'react';
+import { BrowserRouter } from 'react-router-dom';
 import Routing from './routing/Routing';
 
 import styles from './App.module.scss';
@@ -6,7 +7,9 @@ import styles from './App.module.scss';
 function App() {
   return (
     <div className={styles['App']}>
-      <Routing />
+      <BrowserRouter>
+        <Routing />
+      </BrowserRouter>
     </div>
   );
 }

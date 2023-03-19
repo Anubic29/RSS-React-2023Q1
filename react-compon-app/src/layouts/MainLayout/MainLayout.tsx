@@ -1,14 +1,16 @@
 import React from 'react';
-import { Outlet } from 'react-router';
+import { Outlet, useLocation } from 'react-router';
 import { Header } from '../';
 
 import styles from './MainLayout.module.scss';
 
 function MainLayout() {
+  const { pathname } = useLocation();
+
   return (
     <>
-      <Header />
-      <div className={styles['content']}>
+      <Header activeRoute={pathname} />
+      <div className={styles['content']} data-testid="content">
         <Outlet />
       </div>
     </>

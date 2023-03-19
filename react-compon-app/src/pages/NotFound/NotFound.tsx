@@ -5,7 +5,7 @@ import styles from './NotFound.module.scss';
 
 function NotFound() {
   return (
-    <div className={styles['not-found']}>
+    <div className={styles['not-found']} data-testid="not-found-page">
       <div className={styles['content']}>
         <div className={styles['block']}>
           <p className={styles['number']}>404</p>

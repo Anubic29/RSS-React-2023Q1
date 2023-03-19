@@ -22,7 +22,7 @@ export default class Main extends Component<{}, MainState> {
 
   render() {
     return (
-      <div className={styles['main']}>
+      <div className={styles['main']} data-testid="main-page">
         <div className={styles['content']}>
           <div className={styles['search-container']}>
             <h1 className={styles['title']}>Search:</h1>

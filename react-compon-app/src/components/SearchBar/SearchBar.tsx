@@ -31,13 +31,14 @@ export default class SearchBar extends Component<SearchBarProps, SearchBarState>
 
   render() {
     return (
-      <div className={styles['search']}>
+      <div className={styles['search']} data-testid="search-bar">
         <MdSearch className={styles['search__icon']} />
         <input
           type="text"
           className={styles['search__input']}
           value={this.state.value}
           onChange={this.onInputChange}
+          data-testid="search-bar-input"
         />
       </div>
     );
