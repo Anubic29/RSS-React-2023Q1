@@ -13,6 +13,7 @@ interface FormState {
   fourthCheckRef: React.LegacyRef<HTMLInputElement>;
   inputSwitchRef: React.LegacyRef<HTMLInputElement>;
   inputFileRef: React.LegacyRef<HTMLInputElement>;
+  errors: { [key: string]: string };
 }
 
 // eslint-disable-next-line @typescript-eslint/ban-types
@@ -27,6 +28,7 @@ export default class Form extends Component<{}, FormState> {
     fourthCheckRef: React.createRef<HTMLInputElement>(),
     inputSwitchRef: React.createRef<HTMLInputElement>(),
     inputFileRef: React.createRef<HTMLInputElement>(),
+    errors: { userNameError: '', dateError: '', selectError: '', fileError: '' },
   };
 
   onSubmitHandler = (event: React.FormEvent<HTMLFormElement>) => {
@@ -56,15 +58,21 @@ export default class Form extends Component<{}, FormState> {
                 type="text"
                 id="user-name"
                 inputRef={this.state.inputUsernameRef}
-                isValid={false}
-                invalidMessage="Error"
+                isValid={!this.state.errors.userNameError}
+                invalidMessage={this.state.errors.userNameError}
               />
             </div>
             <div className={styles['input-block']}>
               <label className={styles['label']} htmlFor="date">
                 Birthday
               </label>
-              <Input type="date" id="date" inputRef={this.state.inputDateRef} />
+              <Input
+                type="date"
+                id="date"
+                inputRef={this.state.inputDateRef}
+                isValid={!this.state.errors.dateError}
+                invalidMessage={this.state.errors.dateError}
+              />
             </div>
             <div className={styles['input-block']}>
               <label className={styles['label']} htmlFor="select">
@@ -75,8 +83,8 @@ export default class Form extends Component<{}, FormState> {
                 selectRef={this.state.selectCountryRef}
                 title="country"
                 values={['Ukraine', 'USA', 'Mexico', 'Spain', 'France']}
-                isValid={false}
-                invalidMessage="Error"
+                isValid={!this.state.errors.selectError}
+                invalidMessage={this.state.errors.selectError}
               />
             </div>
             <div className={styles['input-block']}>
@@ -133,7 +141,13 @@ export default class Form extends Component<{}, FormState> {
               <label className={styles['label']} htmlFor="file">
                 File
               </label>
-              <Input type="file" id="file" inputRef={this.state.inputFileRef} />
+              <Input
+                type="file"
+                id="file"
+                inputRef={this.state.inputFileRef}
+                isValid={!this.state.errors.fileError}
+                invalidMessage={this.state.errors.fileError}
+              />
             </div>
             <div className={styles['btn-block']}>
               <button className={styles['button']} type="submit">
