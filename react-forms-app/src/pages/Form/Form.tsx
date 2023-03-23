@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Select } from '../../components';
 
 import styles from './Form.module.scss';
 
@@ -73,18 +74,12 @@ export default class Form extends Component<{}, FormState> {
               <label className={styles['label']} htmlFor="select">
                 Country
               </label>
-              <select
-                className={`${styles['input']} ${styles['select']}`}
+              <Select
                 id="select"
-                ref={this.state.selectCountryRef}
-              >
-                <option value="">Select country</option>
-                <option value="Ukraine">Ukraine</option>
-                <option value="USA">USA</option>
-                <option value="Mexico">Mexico</option>
-                <option value="Spain">Spain</option>
-                <option value="France">France</option>
-              </select>
+                selectRef={this.state.selectCountryRef}
+                title="country"
+                values={['Ukraine', 'USA', 'Mexico', 'Spain', 'France']}
+              />
             </div>
             <div className={styles['input-block']}>
               <p className={styles['label']}>Skills</p>
