@@ -3,19 +3,44 @@ import React, { Component } from 'react';
 import styles from './Form.module.scss';
 
 interface FormState {
-  value: string;
+  inputUsernameRef: React.LegacyRef<HTMLInputElement>;
+  inputDateRef: React.LegacyRef<HTMLInputElement>;
+  selectCountryRef: React.LegacyRef<HTMLSelectElement>;
+  firstCheckRef: React.LegacyRef<HTMLInputElement>;
+  secondCheckRef: React.LegacyRef<HTMLInputElement>;
+  thirdCheckRef: React.LegacyRef<HTMLInputElement>;
+  fourthCheckRef: React.LegacyRef<HTMLInputElement>;
+  inputSwitchRef: React.LegacyRef<HTMLInputElement>;
+  inputFileRef: React.LegacyRef<HTMLInputElement>;
 }
 
 // eslint-disable-next-line @typescript-eslint/ban-types
 export default class Form extends Component<{}, FormState> {
   state = {
-    value: '',
+    inputUsernameRef: React.createRef<HTMLInputElement>(),
+    inputDateRef: React.createRef<HTMLInputElement>(),
+    selectCountryRef: React.createRef<HTMLSelectElement>(),
+    firstCheckRef: React.createRef<HTMLInputElement>(),
+    secondCheckRef: React.createRef<HTMLInputElement>(),
+    thirdCheckRef: React.createRef<HTMLInputElement>(),
+    fourthCheckRef: React.createRef<HTMLInputElement>(),
+    inputSwitchRef: React.createRef<HTMLInputElement>(),
+    inputFileRef: React.createRef<HTMLInputElement>(),
   };
 
-  onSubmitHandler(event: React.FormEvent<HTMLFormElement>) {
+  onSubmitHandler = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    console.log('Submit');
-  }
+
+    console.log(this.state.inputUsernameRef.current?.value);
+    console.log(this.state.inputDateRef.current?.value);
+    console.log(this.state.selectCountryRef.current?.value);
+    console.log(this.state.firstCheckRef.current?.checked);
+    console.log(this.state.secondCheckRef.current?.checked);
+    console.log(this.state.thirdCheckRef.current?.checked);
+    console.log(this.state.inputSwitchRef.current?.checked);
+    console.log(this.state.inputSwitchRef.current?.checked);
+    console.log(this.state.inputFileRef.current?.value);
+  };
 
   render() {
     return (
@@ -26,22 +51,34 @@ export default class Form extends Component<{}, FormState> {
               <label className={styles['label']} htmlFor="user-name">
                 Username
               </label>
-              <input className={styles['input']} type="text" id="user-name" />
+              <input
+                className={styles['input']}
+                type="text"
+                id="user-name"
+                ref={this.state.inputUsernameRef}
+              />
             </div>
             <div className={styles['input-block']}>
               <label className={styles['label']} htmlFor="date">
                 Birthday
               </label>
-              <input className={styles['input']} type="date" id="date" />
+              <input
+                className={styles['input']}
+                type="date"
+                id="date"
+                ref={this.state.inputDateRef}
+              />
             </div>
             <div className={styles['input-block']}>
               <label className={styles['label']} htmlFor="select">
                 Country
               </label>
-              <select className={`${styles['input']} ${styles['select']}`} id="select">
-                <option value="" disabled={true}>
-                  Select country
-                </option>
+              <select
+                className={`${styles['input']} ${styles['select']}`}
+                id="select"
+                ref={this.state.selectCountryRef}
+              >
+                <option value="">Select country</option>
                 <option value="Ukraine">Ukraine</option>
                 <option value="USA">USA</option>
                 <option value="Mexico">Mexico</option>
@@ -52,16 +89,40 @@ export default class Form extends Component<{}, FormState> {
             <div className={styles['input-block']}>
               <p className={styles['label']}>Skills</p>
               <label className={styles['check-block']}>
-                <input className={styles['input']} type="checkbox" /> HTML
+                <input
+                  className={styles['input']}
+                  type="checkbox"
+                  ref={this.state.firstCheckRef}
+                  value="HTML"
+                />
+                HTML
               </label>
               <label className={styles['check-block']}>
-                <input className={styles['input']} type="checkbox" /> CSS
+                <input
+                  className={styles['input']}
+                  type="checkbox"
+                  ref={this.state.secondCheckRef}
+                  value="CSS"
+                />
+                CSS
               </label>
               <label className={styles['check-block']}>
-                <input className={styles['input']} type="checkbox" /> JavaScript
+                <input
+                  className={styles['input']}
+                  type="checkbox"
+                  ref={this.state.thirdCheckRef}
+                  value="JavaScript"
+                />
+                JavaScript
               </label>
               <label className={styles['check-block']}>
-                <input className={styles['input']} type="checkbox" /> React
+                <input
+                  className={styles['input']}
+                  type="checkbox"
+                  ref={this.state.fourthCheckRef}
+                  value="React"
+                />
+                React
               </label>
             </div>
             <div className={styles['input-block']}>
@@ -69,7 +130,7 @@ export default class Form extends Component<{}, FormState> {
               <div className={styles['switch-block']}>
                 <p>Basic</p>
                 <label className={styles['switch']}>
-                  <input type="checkbox" />
+                  <input type="checkbox" ref={this.state.inputSwitchRef} />
                   <span className={styles['slider']}></span>
                 </label>
                 <p>Premium</p>
@@ -79,7 +140,12 @@ export default class Form extends Component<{}, FormState> {
               <label className={styles['label']} htmlFor="file">
                 File
               </label>
-              <input className={styles['input']} type="file" id="file" />
+              <input
+                className={styles['input']}
+                type="file"
+                id="file"
+                ref={this.state.inputFileRef}
+              />
             </div>
             <div className={styles['btn-block']}>
               <button className={styles['button']} type="submit">
