@@ -52,7 +52,13 @@ export default class Form extends Component<{}, FormState> {
               <label className={styles['label']} htmlFor="user-name">
                 Username
               </label>
-              <Input type="text" id="user-name" inputRef={this.state.inputUsernameRef} />
+              <Input
+                type="text"
+                id="user-name"
+                inputRef={this.state.inputUsernameRef}
+                isValid={false}
+                invalidMessage="Error"
+              />
             </div>
             <div className={styles['input-block']}>
               <label className={styles['label']} htmlFor="date">
@@ -69,6 +75,8 @@ export default class Form extends Component<{}, FormState> {
                 selectRef={this.state.selectCountryRef}
                 title="country"
                 values={['Ukraine', 'USA', 'Mexico', 'Spain', 'France']}
+                isValid={false}
+                invalidMessage="Error"
               />
             </div>
             <div className={styles['input-block']}>

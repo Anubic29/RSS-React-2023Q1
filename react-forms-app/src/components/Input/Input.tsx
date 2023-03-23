@@ -7,6 +7,8 @@ interface InputProps {
   inputRef?: React.RefObject<HTMLInputElement>;
   type: 'text' | 'number' | 'date' | 'file';
   className?: CSSProperties;
+  isValid?: boolean;
+  invalidMessage?: string;
 }
 
 export default class Input extends Component<InputProps> {
@@ -18,11 +20,16 @@ export default class Input extends Component<InputProps> {
     return (
       <div className={styles['input-block']}>
         <input
-          className={classNames}
+          className={
+            this.props.isValid === false ? `${classNames} ${styles['input-invalid']}` : classNames
+          }
           type={this.props.type}
           id={this.props.id}
           ref={this.props.inputRef}
         />
+        {this.props.isValid === false && this.props.invalidMessage && (
+          <p className={styles['invalid-message']}>{this.props.invalidMessage}</p>
+        )}
       </div>
     );
   }
