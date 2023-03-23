@@ -1,0 +1,19 @@
+@import "../../theme/variables.scss";
+
+.input {
+  width: 250px;
+  padding: 5px 10px;
+  background-color: transparent;
+  color: $colorContentInput;
+  border: 2px solid $colorBgInputDefault;
+  border-radius: 5px;
+
+  &:focus {
+    outline: none;
+    border-color: $colorBgInputHover;
+  }
+
+  &::-webkit-calendar-picker-indicator {
+    filter: invert(1);
+  }
+}

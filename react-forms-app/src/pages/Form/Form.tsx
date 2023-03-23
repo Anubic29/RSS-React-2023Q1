@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Select } from '../../components';
+import { Input, Select } from '../../components';
 
 import styles from './Form.module.scss';
 
@@ -52,23 +52,13 @@ export default class Form extends Component<{}, FormState> {
               <label className={styles['label']} htmlFor="user-name">
                 Username
               </label>
-              <input
-                className={styles['input']}
-                type="text"
-                id="user-name"
-                ref={this.state.inputUsernameRef}
-              />
+              <Input type="text" id="user-name" inputRef={this.state.inputUsernameRef} />
             </div>
             <div className={styles['input-block']}>
               <label className={styles['label']} htmlFor="date">
                 Birthday
               </label>
-              <input
-                className={styles['input']}
-                type="date"
-                id="date"
-                ref={this.state.inputDateRef}
-              />
+              <Input type="date" id="date" inputRef={this.state.inputDateRef} />
             </div>
             <div className={styles['input-block']}>
               <label className={styles['label']} htmlFor="select">
@@ -135,12 +125,7 @@ export default class Form extends Component<{}, FormState> {
               <label className={styles['label']} htmlFor="file">
                 File
               </label>
-              <input
-                className={styles['input']}
-                type="file"
-                id="file"
-                ref={this.state.inputFileRef}
-              />
+              <Input type="file" id="file" inputRef={this.state.inputFileRef} />
             </div>
             <div className={styles['btn-block']}>
               <button className={styles['button']} type="submit">
