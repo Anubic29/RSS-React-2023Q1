@@ -34,6 +34,16 @@ export default class Header extends Component<HeaderProps> {
                   About
                 </Link>
               </li>
+              <li>
+                <Link
+                  to="/form"
+                  className={`${styles['link']} ${
+                    this.props.activeRoute === '/form' ? styles['active'] : ''
+                  }`.trim()}
+                >
+                  Form
+                </Link>
+              </li>
             </ul>
           </nav>
         </div>
