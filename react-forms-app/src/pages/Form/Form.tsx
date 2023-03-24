@@ -1,7 +1,7 @@
 /* eslint-disable react/no-direct-mutation-state */
 import React, { Component } from 'react';
 import { Input, Select } from '../../components';
-import { Card as CardCompon } from './components';
+import { FormCard } from './components';
 
 import styles from './Form.module.scss';
 
@@ -244,7 +244,7 @@ export default class Form extends Component<{}, FormState> {
               {this.state.cards.length > 0 ? (
                 this.state.cards.map((card, idx) => (
                   <div className={styles['card-block']} key={idx}>
-                    <CardCompon
+                    <FormCard
                       id={idx + 0}
                       userName={card['userName']}
                       date={card['date']}

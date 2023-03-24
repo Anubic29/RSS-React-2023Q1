@@ -1,6 +1,6 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
-import Card from './Card';
+import FormCard from './FormCard';
 
 const mockCardData = {
   id: 1,
@@ -14,14 +14,14 @@ const mockCardData = {
 
 describe('Form Card', () => {
   it('should be in document', () => {
-    render(<Card {...mockCardData} />);
+    render(<FormCard {...mockCardData} />);
 
     const card = screen.getByTestId('form-card');
     expect(card).toBeInTheDocument();
   });
 
   it('correct data', () => {
-    render(<Card {...mockCardData} />);
+    render(<FormCard {...mockCardData} />);
 
     const title = screen.getByTestId('form-card-title');
     const date = screen.getByTestId('form-card-date');

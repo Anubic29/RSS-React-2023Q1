@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 
-import styles from './Card.module.scss';
+import styles from './FormCard.module.scss';
 
-interface CardProps {
+interface FormCardProps {
   id: number;
   userName: string;
   date: string;
@@ -12,7 +12,7 @@ interface CardProps {
   file: string;
 }
 
-export default class Card extends Component<CardProps> {
+export default class FormCard extends Component<FormCardProps> {
   render() {
     const { id, userName, ...rest } = this.props;
 

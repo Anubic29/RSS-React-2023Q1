@@ -1,3 +1,3 @@
-import Card from './Card/Card';
+import FormCard from './FormCard/FormCard';
 
-export { Card };
+export { FormCard };
