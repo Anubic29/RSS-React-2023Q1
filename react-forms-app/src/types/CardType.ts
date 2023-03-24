@@ -4,3 +4,12 @@ export type CardType = {
   genreList: string[];
   price: number;
 };
+
+export type FormCardType = {
+  userName: string;
+  date: string;
+  country: string;
+  skills: string;
+  type: string;
+  file: string;
+};

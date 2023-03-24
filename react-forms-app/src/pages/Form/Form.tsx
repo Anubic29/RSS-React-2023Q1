@@ -1,18 +1,10 @@
 /* eslint-disable react/no-direct-mutation-state */
 import React, { Component } from 'react';
 import { Input, Select } from '../../components';
-import { FormCard } from './components';
+import { FormCardList } from './components';
+import { FormCardType } from 'types/CardType';
 
 import styles from './Form.module.scss';
-
-type Card = {
-  userName: string;
-  date: string;
-  country: string;
-  skills: string;
-  type: string;
-  file: string;
-};
 
 interface FormState {
   inputUsernameRef: React.LegacyRef<HTMLInputElement>;
@@ -25,7 +17,7 @@ interface FormState {
   inputSwitchRef: React.LegacyRef<HTMLInputElement>;
   inputFileRef: React.LegacyRef<HTMLInputElement>;
   errors: { [key: string]: string };
-  cards: Card[];
+  cards: FormCardType[];
 }
 
 // eslint-disable-next-line @typescript-eslint/ban-types
@@ -114,7 +106,7 @@ export default class Form extends Component<{}, FormState> {
         this.state.thirdCheckRef,
         this.state.fourthCheckRef,
       ].filter((elem) => elem.current?.checked);
-      const card: Card = {
+      const card: FormCardType = {
         userName: `${this.state.inputUsernameRef.current?.value}`,
         date: `${this.state.inputDateRef.current?.value}`,
         country: `${this.state.selectCountryRef.current?.value}`,
@@ -240,25 +232,7 @@ export default class Form extends Component<{}, FormState> {
           </form>
           <div className={styles['card-list-section']}>
             <h1 className={styles['title']}>Card List</h1>
-            <div className={styles['card-list']}>
-              {this.state.cards.length > 0 ? (
-                this.state.cards.map((card, idx) => (
-                  <div className={styles['card-block']} key={idx}>
-                    <FormCard
-                      id={idx + 0}
-                      userName={card['userName']}
-                      date={card['date']}
-                      country={card['country']}
-                      skills={card['skills']}
-                      type={card['type']}
-                      file={card['file']}
-                    />
-                  </div>
-                ))
-              ) : (
-                <div className={styles['empty-message']}>List is empty</div>
-              )}
-            </div>
+            <FormCardList cards={this.state.cards} />
           </div>
         </div>
       </div>
