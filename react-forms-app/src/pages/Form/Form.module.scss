@@ -113,6 +113,7 @@
   display: flex;
   justify-content: center;
   margin-top: 20px;
+  position: relative;
 }
 
 .button {
@@ -131,6 +132,15 @@
     color: $colorContentBtnHover;
     background-color: $colorBgBtnHover;
   }
+}
+
+.saved {
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translate(0, -50%);
+  color: greenyellow;
+  font-size: 15px;
 }
 
 .card-list-section {

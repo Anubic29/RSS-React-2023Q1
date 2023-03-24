@@ -22,6 +22,7 @@ interface FormState {
   inputFileRef: React.LegacyRef<HTMLInputElement>;
   errors: { [key: string]: string };
   cards: FormCardType[];
+  saved: boolean;
 }
 
 // eslint-disable-next-line @typescript-eslint/ban-types
@@ -42,6 +43,7 @@ export default class Form extends Component<{}, FormState> {
     inputFileRef: React.createRef<HTMLInputElement>(),
     errors: { userNameError: '', dateError: '', selectError: '', radioError: '' },
     cards: [],
+    saved: false,
   };
 
   validateForm = () => {
@@ -150,7 +152,10 @@ export default class Form extends Component<{}, FormState> {
 
       if (card.file === '') card.file = 'None file';
 
-      this.setState({ cards: [...this.state.cards, card] });
+      this.setState({ cards: [...this.state.cards, card], saved: true });
+      setTimeout(() => {
+        this.setState({ saved: false });
+      }, 3000);
       this.resetForm();
     }
   };
@@ -305,6 +310,7 @@ export default class Form extends Component<{}, FormState> {
               <button className={styles['button']} type="submit">
                 Submit
               </button>
+              {this.state.saved && <div className={styles['saved']}>Saved</div>}
             </div>
           </form>
           <div className={styles['card-list-section']}>
