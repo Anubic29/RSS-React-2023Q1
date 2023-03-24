@@ -13,11 +13,14 @@ describe('Header component', () => {
 
     const mainLink = screen.getByRole('link', { name: 'Main' });
     const aboutLink = screen.getByRole('link', { name: 'About' });
+    const formLink = screen.getByRole('link', { name: 'Form' });
 
     expect(mainLink).toHaveAttribute('href', '/');
     expect(mainLink.className).toEqual(expect.stringMatching(/_active_/));
     expect(aboutLink).toHaveAttribute('href', '/about');
     expect(aboutLink.className).not.toEqual(expect.stringMatching(/_active_/));
+    expect(formLink).toHaveAttribute('href', '/form');
+    expect(formLink.className).not.toEqual(expect.stringMatching(/_active_/));
   });
 
   it('header with route /about', () => {
@@ -29,11 +32,33 @@ describe('Header component', () => {
 
     const mainLink = screen.getByRole('link', { name: 'Main' });
     const aboutLink = screen.getByRole('link', { name: 'About' });
+    const formLink = screen.getByRole('link', { name: 'Form' });
 
     expect(mainLink).toHaveAttribute('href', '/');
     expect(mainLink.className).not.toEqual(expect.stringMatching(/_active_/));
     expect(aboutLink).toHaveAttribute('href', '/about');
     expect(aboutLink.className).toEqual(expect.stringMatching(/_active_/));
+    expect(formLink).toHaveAttribute('href', '/form');
+    expect(formLink.className).not.toEqual(expect.stringMatching(/_active_/));
+  });
+
+  it('header with route /form', () => {
+    render(
+      <BrowserRouter>
+        <Header activeRoute="/form" />
+      </BrowserRouter>
+    );
+
+    const mainLink = screen.getByRole('link', { name: 'Main' });
+    const aboutLink = screen.getByRole('link', { name: 'About' });
+    const formLink = screen.getByRole('link', { name: 'Form' });
+
+    expect(mainLink).toHaveAttribute('href', '/');
+    expect(mainLink.className).not.toEqual(expect.stringMatching(/_active_/));
+    expect(aboutLink).toHaveAttribute('href', '/about');
+    expect(aboutLink.className).not.toEqual(expect.stringMatching(/_active_/));
+    expect(formLink).toHaveAttribute('href', '/form');
+    expect(formLink.className).toEqual(expect.stringMatching(/_active_/));
   });
 
   it('header with route /not-found', () => {
@@ -45,10 +70,13 @@ describe('Header component', () => {
 
     const mainLink = screen.getByRole('link', { name: 'Main' });
     const aboutLink = screen.getByRole('link', { name: 'About' });
+    const formLink = screen.getByRole('link', { name: 'Form' });
 
     expect(mainLink).toHaveAttribute('href', '/');
     expect(mainLink.className).not.toEqual(expect.stringMatching(/_active_/));
     expect(aboutLink).toHaveAttribute('href', '/about');
     expect(aboutLink.className).not.toEqual(expect.stringMatching(/_active_/));
+    expect(formLink).toHaveAttribute('href', '/form');
+    expect(formLink.className).not.toEqual(expect.stringMatching(/_active_/));
   });
 });
