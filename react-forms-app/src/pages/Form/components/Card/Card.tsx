@@ -17,9 +17,9 @@ export default class Card extends Component<CardProps> {
     const { id, userName, ...rest } = this.props;
 
     return (
-      <div className={styles['card']}>
+      <div className={styles['card']} data-testid="form-card">
         <div className={styles['title-block']}>
-          <h1 className={styles['title']}>
+          <h1 className={styles['title']} data-testid="form-card-title">
             {id}. {userName}
           </h1>
         </div>
@@ -27,7 +27,9 @@ export default class Card extends Component<CardProps> {
           {Object.entries(rest).map((param, idx) => (
             <li key={idx} className={styles['param']}>
               <span className={styles['subtitle']}>{param[0]}:</span>
-              <span className={styles['value']}>{param[1]}</span>
+              <span className={styles['value']} data-testid={`form-card-${param[0]}`}>
+                {param[1]}
+              </span>
             </li>
           ))}
         </ul>
