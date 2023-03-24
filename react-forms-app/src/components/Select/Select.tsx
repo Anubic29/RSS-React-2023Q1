@@ -1,4 +1,4 @@
-import React, { Component, CSSProperties } from 'react';
+import React, { Component } from 'react';
 
 import styles from './Select.module.scss';
 
@@ -7,7 +7,7 @@ interface SelectProps {
   selectRef?: React.RefObject<HTMLSelectElement>;
   title: string;
   values: string[];
-  className?: CSSProperties;
+  className?: string;
   isValid?: boolean;
   invalidMessage?: string;
 }
@@ -26,17 +26,20 @@ export default class Select extends Component<SelectProps> {
           }
           id={this.props.id}
           ref={this.props.selectRef}
+          data-testid="select"
         >
           <option value="">Select {this.props.title}</option>
           {this.props.values.length > 0 &&
             this.props.values.map((value, idx) => (
-              <option key={idx} value={value}>
+              <option key={idx} value={value} data-testid="select-option">
                 {value}
               </option>
             ))}
         </select>
         {this.props.isValid === false && this.props.invalidMessage && (
-          <p className={styles['invalid-message']}>{this.props.invalidMessage}</p>
+          <p className={styles['invalid-message']} data-testid="error-message">
+            {this.props.invalidMessage}
+          </p>
         )}
       </div>
     );
