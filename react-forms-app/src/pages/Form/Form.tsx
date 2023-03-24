@@ -31,18 +31,45 @@ export default class Form extends Component<{}, FormState> {
     errors: { userNameError: '', dateError: '', selectError: '', fileError: '' },
   };
 
+  validate = () => {
+    const errors: { [key: string]: string } = {};
+
+    if (!this.state.inputUsernameRef.current?.value) {
+      errors.userNameError = "Username can't be empty";
+    } else if (this.state.inputUsernameRef.current?.value.length < 4) {
+      errors.userNameError = 'Username must be longer than 3 letters';
+    }
+
+    if (!this.state.inputDateRef.current?.value) {
+      errors.dateError = "Date can't be empty";
+    }
+
+    if (!this.state.selectCountryRef.current?.value) {
+      errors.selectError = 'You must select a country';
+    }
+
+    if (!this.state.inputFileRef.current?.value) {
+      errors.fileError = 'You must select a file';
+    }
+
+    this.setState({ errors });
+
+    return !Object.values(errors).some((error) => error.length > 0);
+  };
+
   onSubmitHandler = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-
-    console.log(this.state.inputUsernameRef.current?.value);
-    console.log(this.state.inputDateRef.current?.value);
-    console.log(this.state.selectCountryRef.current?.value);
-    console.log(this.state.firstCheckRef.current?.checked);
-    console.log(this.state.secondCheckRef.current?.checked);
-    console.log(this.state.thirdCheckRef.current?.checked);
-    console.log(this.state.inputSwitchRef.current?.checked);
-    console.log(this.state.inputSwitchRef.current?.checked);
-    console.log(this.state.inputFileRef.current?.value);
+    if (this.validate()) {
+      console.log(this.state.inputUsernameRef.current?.value);
+      console.log(this.state.inputDateRef.current?.value);
+      console.log(this.state.selectCountryRef.current?.value);
+      console.log(this.state.firstCheckRef.current?.checked);
+      console.log(this.state.secondCheckRef.current?.checked);
+      console.log(this.state.thirdCheckRef.current?.checked);
+      console.log(this.state.fourthCheckRef.current?.checked);
+      console.log(this.state.inputSwitchRef.current?.checked);
+      console.log(this.state.inputFileRef.current?.value);
+    }
   };
 
   render() {
