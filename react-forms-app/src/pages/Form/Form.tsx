@@ -32,7 +32,7 @@ export default class Form extends Component<{}, FormState> {
     fourthCheckRef: React.createRef<HTMLInputElement>(),
     inputSwitchRef: React.createRef<HTMLInputElement>(),
     inputFileRef: React.createRef<HTMLInputElement>(),
-    errors: { userNameError: '', dateError: '', selectError: '', fileError: '' },
+    errors: { userNameError: '', dateError: '', selectError: '' },
     cards: [],
   };
 
@@ -51,10 +51,6 @@ export default class Form extends Component<{}, FormState> {
 
     if (!this.state.selectCountryRef.current?.value) {
       errors.selectError = 'You must select a country';
-    }
-
-    if (!this.state.inputFileRef.current?.value) {
-      errors.fileError = 'You must select a file';
     }
 
     this.setState({ errors });
@@ -115,6 +111,8 @@ export default class Form extends Component<{}, FormState> {
         file: `${this.state.inputFileRef.current?.value}`,
       };
 
+      if (card.file === '') card.file = 'None file';
+
       this.setState({ cards: [...this.state.cards, card] });
       this.resetForm();
     }
@@ -122,7 +120,7 @@ export default class Form extends Component<{}, FormState> {
 
   render() {
     return (
-      <div className={styles['form-page']}>
+      <div className={styles['form-page']} data-testid="form-page">
         <div className={styles['content']}>
           <form className={styles['form']} onSubmit={this.onSubmitHandler}>
             <div className={styles['input-block']}>
@@ -206,7 +204,7 @@ export default class Form extends Component<{}, FormState> {
               <div className={styles['switch-block']}>
                 <p>Basic</p>
                 <label className={styles['switch']}>
-                  <input type="checkbox" ref={this.state.inputSwitchRef} />
+                  <input type="checkbox" ref={this.state.inputSwitchRef} data-testid="switch" />
                   <span className={styles['slider']}></span>
                 </label>
                 <p>Premium</p>
@@ -216,13 +214,7 @@ export default class Form extends Component<{}, FormState> {
               <label className={styles['label']} htmlFor="file">
                 File
               </label>
-              <Input
-                type="file"
-                id="file"
-                inputRef={this.state.inputFileRef}
-                isValid={!this.state.errors.fileError}
-                invalidMessage={this.state.errors.fileError}
-              />
+              <Input type="file" id="file" inputRef={this.state.inputFileRef} />
             </div>
             <div className={styles['btn-block']}>
               <button className={styles['button']} type="submit">
