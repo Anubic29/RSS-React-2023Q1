@@ -1,6 +1,7 @@
 /* eslint-disable react/no-direct-mutation-state */
 import React, { Component } from 'react';
 import { Input, Select } from '../../components';
+import { Card as CardCompon } from './components';
 
 import styles from './Form.module.scss';
 
@@ -237,6 +238,28 @@ export default class Form extends Component<{}, FormState> {
               </button>
             </div>
           </form>
+          <div className={styles['card-list-section']}>
+            <h1 className={styles['title']}>Card List</h1>
+            <div className={styles['card-list']}>
+              {this.state.cards.length > 0 ? (
+                this.state.cards.map((card, idx) => (
+                  <div className={styles['card-block']} key={idx}>
+                    <CardCompon
+                      id={idx + 0}
+                      userName={card['userName']}
+                      date={card['date']}
+                      country={card['country']}
+                      skills={card['skills']}
+                      type={card['type']}
+                      file={card['file']}
+                    />
+                  </div>
+                ))
+              ) : (
+                <div className={styles['empty-message']}>List is empty</div>
+              )}
+            </div>
+          </div>
         </div>
       </div>
     );
