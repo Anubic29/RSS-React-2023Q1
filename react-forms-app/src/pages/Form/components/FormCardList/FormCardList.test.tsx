@@ -9,6 +9,7 @@ const mockCardListData: FormCardType[] = [
     date: '1999-02-27',
     country: 'Ukraine',
     skills: 'HTML, CSS',
+    language: 'Spanish',
     type: 'Basic',
     file: 'C:\\fakepath\\inkognito.jpg',
   },
@@ -17,6 +18,7 @@ const mockCardListData: FormCardType[] = [
     date: '0564-12-12',
     country: 'Valhalla',
     skills: 'JavaScript, React',
+    language: 'English',
     type: 'Premium',
     file: 'C:\\fakepath\\Yul.jpg',
   },
@@ -43,6 +45,7 @@ describe('CardList', () => {
       const date = card.querySelector('[data-testid="form-card-date"]');
       const country = card.querySelector('[data-testid="form-card-country"]');
       const skills = card.querySelector('[data-testid="form-card-skills"]');
+      const language = card.querySelector('[data-testid="form-card-language"]');
       const type = card.querySelector('[data-testid="form-card-type"]');
       const file = card.querySelector('[data-testid="form-card-file"]');
 
@@ -50,6 +53,7 @@ describe('CardList', () => {
       expect(date).toBeInTheDocument();
       expect(country).toBeInTheDocument();
       expect(skills).toBeInTheDocument();
+      expect(language).toBeInTheDocument();
       expect(type).toBeInTheDocument();
       expect(file).toBeInTheDocument();
 
@@ -57,6 +61,7 @@ describe('CardList', () => {
       expect(date).toHaveTextContent(mockCardListData[i].date);
       expect(country).toHaveTextContent(mockCardListData[i].country);
       expect(skills).toHaveTextContent(mockCardListData[i].skills);
+      expect(language).toHaveTextContent(mockCardListData[i].language);
       expect(type).toHaveTextContent(mockCardListData[i].type);
       expect(file).toHaveTextContent(mockCardListData[i].file);
     }

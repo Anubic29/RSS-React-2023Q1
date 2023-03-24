@@ -19,6 +19,15 @@
   display: flex;
   flex-direction: column;
   margin-bottom: 15px;
+  position: relative;
+}
+
+.error-message {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  color: $colorInvalidInput;
+  transform: translate(0, 100%);
 }
 
 .label {

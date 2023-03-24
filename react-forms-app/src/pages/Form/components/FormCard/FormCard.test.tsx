@@ -8,6 +8,7 @@ const mockCardData = {
   date: '1999-02-27',
   country: 'Ukraine',
   skills: 'JavaScript, React',
+  language: 'English',
   type: 'Premium',
   file: 'C:\\fakepath\\inkognito.jpg',
 };
@@ -27,6 +28,7 @@ describe('Form Card', () => {
     const date = screen.getByTestId('form-card-date');
     const country = screen.getByTestId('form-card-country');
     const skills = screen.getByTestId('form-card-skills');
+    const language = screen.getByTestId('form-card-language');
     const type = screen.getByTestId('form-card-type');
     const file = screen.getByTestId('form-card-file');
 
@@ -34,6 +36,7 @@ describe('Form Card', () => {
     expect(date).toHaveTextContent(mockCardData.date);
     expect(country).toHaveTextContent(mockCardData.country);
     expect(skills).toHaveTextContent(mockCardData.skills);
+    expect(language).toHaveTextContent(mockCardData.language);
     expect(type).toHaveTextContent(mockCardData.type);
     expect(file).toHaveTextContent(mockCardData.file);
   });

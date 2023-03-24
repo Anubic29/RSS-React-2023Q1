@@ -10,6 +10,7 @@ export type FormCardType = {
   date: string;
   country: string;
   skills: string;
+  language: string;
   type: string;
   file: string;
 };

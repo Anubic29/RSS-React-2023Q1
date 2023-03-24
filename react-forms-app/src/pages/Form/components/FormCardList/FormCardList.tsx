@@ -21,6 +21,7 @@ export default class FormCardList extends Component<FormCardListProps> {
                 date={card['date']}
                 country={card['country']}
                 skills={card['skills']}
+                language={card['language']}
                 type={card['type']}
                 file={card['file']}
               />

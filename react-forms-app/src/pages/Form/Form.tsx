@@ -14,6 +14,10 @@ interface FormState {
   secondCheckRef: React.LegacyRef<HTMLInputElement>;
   thirdCheckRef: React.LegacyRef<HTMLInputElement>;
   fourthCheckRef: React.LegacyRef<HTMLInputElement>;
+  firstRadioRef: React.LegacyRef<HTMLInputElement>;
+  secondRadioRef: React.LegacyRef<HTMLInputElement>;
+  thirdRadioRef: React.LegacyRef<HTMLInputElement>;
+  fourthRadioRef: React.LegacyRef<HTMLInputElement>;
   inputSwitchRef: React.LegacyRef<HTMLInputElement>;
   inputFileRef: React.LegacyRef<HTMLInputElement>;
   errors: { [key: string]: string };
@@ -30,9 +34,13 @@ export default class Form extends Component<{}, FormState> {
     secondCheckRef: React.createRef<HTMLInputElement>(),
     thirdCheckRef: React.createRef<HTMLInputElement>(),
     fourthCheckRef: React.createRef<HTMLInputElement>(),
+    firstRadioRef: React.createRef<HTMLInputElement>(),
+    secondRadioRef: React.createRef<HTMLInputElement>(),
+    thirdRadioRef: React.createRef<HTMLInputElement>(),
+    fourthRadioRef: React.createRef<HTMLInputElement>(),
     inputSwitchRef: React.createRef<HTMLInputElement>(),
     inputFileRef: React.createRef<HTMLInputElement>(),
-    errors: { userNameError: '', dateError: '', selectError: '' },
+    errors: { userNameError: '', dateError: '', selectError: '', radioError: '' },
     cards: [],
   };
 
@@ -51,6 +59,15 @@ export default class Form extends Component<{}, FormState> {
 
     if (!this.state.selectCountryRef.current?.value) {
       errors.selectError = 'You must select a country';
+    }
+
+    if (
+      !this.state.firstRadioRef.current?.checked &&
+      !this.state.secondRadioRef.current?.checked &&
+      !this.state.thirdRadioRef.current?.checked &&
+      !this.state.fourthRadioRef.current?.checked
+    ) {
+      errors.radioError = 'You must select a language';
     }
 
     this.setState({ errors });
@@ -84,6 +101,19 @@ export default class Form extends Component<{}, FormState> {
       this.state.fourthCheckRef.current.checked = false;
     }
 
+    if (this.state.firstRadioRef.current) {
+      this.state.firstRadioRef.current.checked = false;
+    }
+    if (this.state.secondRadioRef.current) {
+      this.state.secondRadioRef.current.checked = false;
+    }
+    if (this.state.thirdRadioRef.current) {
+      this.state.thirdRadioRef.current.checked = false;
+    }
+    if (this.state.fourthRadioRef.current) {
+      this.state.fourthRadioRef.current.checked = false;
+    }
+
     if (this.state.inputSwitchRef.current) {
       this.state.inputSwitchRef.current.checked = false;
     }
@@ -102,11 +132,18 @@ export default class Form extends Component<{}, FormState> {
         this.state.thirdCheckRef,
         this.state.fourthCheckRef,
       ].filter((elem) => elem.current?.checked);
+      const language = [
+        this.state.firstRadioRef,
+        this.state.secondRadioRef,
+        this.state.thirdRadioRef,
+        this.state.fourthRadioRef,
+      ].filter((elem) => elem.current?.checked);
       const card: FormCardType = {
         userName: `${this.state.inputUsernameRef.current?.value}`,
         date: `${this.state.inputDateRef.current?.value}`,
         country: `${this.state.selectCountryRef.current?.value}`,
         skills: skills.length > 0 ? skills.map((elem) => elem.current?.value).join(', ') : 'None',
+        language: `${language[0].current?.value}`,
         type: this.state.inputSwitchRef.current?.checked ? 'Premium' : 'Basic',
         file: `${this.state.inputFileRef.current?.value}`,
       };
@@ -198,6 +235,54 @@ export default class Form extends Component<{}, FormState> {
                 />
                 React
               </label>
+            </div>
+            <div className={styles['input-block']}>
+              <p className={styles['label']}>Language</p>
+              <label className={styles['check-block']}>
+                <input
+                  className={styles['input']}
+                  name="language"
+                  type="radio"
+                  ref={this.state.firstRadioRef}
+                  value="English"
+                />
+                English
+              </label>
+              <label className={styles['check-block']}>
+                <input
+                  className={styles['input']}
+                  name="language"
+                  type="radio"
+                  ref={this.state.secondRadioRef}
+                  value="Spanish"
+                />
+                Spanish
+              </label>
+              <label className={styles['check-block']}>
+                <input
+                  className={styles['input']}
+                  name="language"
+                  type="radio"
+                  ref={this.state.thirdRadioRef}
+                  value="Chinese"
+                />
+                Chinese
+              </label>
+              <label className={styles['check-block']}>
+                <input
+                  className={styles['input']}
+                  name="language"
+                  type="radio"
+                  ref={this.state.fourthRadioRef}
+                  value="Ukrainian"
+                />
+                Ukrainian
+              </label>
+              {this.state.errors.radioError && (
+                <p className={styles['error-message']} data-testid="error-message">
+                  {this.state.errors.radioError}
+                </p>
+              )}
             </div>
             <div className={styles['input-block']}>
               <p className={styles['label']}>Type</p>

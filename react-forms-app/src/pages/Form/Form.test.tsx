@@ -24,12 +24,14 @@ describe('Form page', () => {
     expect(errorMessage2).toBeInTheDocument();
     const errorMessage3 = screen.getByText('You must select a country');
     expect(errorMessage3).toBeInTheDocument();
+    const errorMessage4 = screen.getByText('You must select a language');
+    expect(errorMessage4).toBeInTheDocument();
 
     fireEvent.change(userNameInput, { target: { value: 'as' } });
     fireEvent.click(submitButton);
 
-    const errorMessage4 = screen.getByText('Username must be longer than 3 letters');
-    expect(errorMessage4).toBeInTheDocument();
+    const errorMessage5 = screen.getByText('Username must be longer than 3 letters');
+    expect(errorMessage5).toBeInTheDocument();
 
     const emptyMessage = screen.getByTestId('empty-message');
     expect(emptyMessage).toBeInTheDocument();
@@ -42,6 +44,8 @@ describe('Form page', () => {
     const dateInput = screen.getByLabelText('Birthday') as HTMLInputElement;
     const countrySelect = screen.getByLabelText('Country') as HTMLSelectElement;
     const firstCheck = screen.getByLabelText('HTML') as HTMLInputElement;
+    const secondRadio = screen.getByLabelText('Spanish') as HTMLInputElement;
+    const thirdRadio = screen.getByLabelText('Chinese') as HTMLInputElement;
     const switchInput = screen.getByTestId('switch') as HTMLInputElement;
     const fileInput = screen.getByLabelText('File') as HTMLInputElement;
     const submitButton = screen.getByRole('button', { name: 'Submit' });
@@ -50,6 +54,7 @@ describe('Form page', () => {
     fireEvent.change(dateInput, { target: { value: '2000-01-01' } });
     fireEvent.change(countrySelect, { target: { value: 'USA' } });
     fireEvent.click(firstCheck);
+    fireEvent.click(thirdRadio);
     fireEvent.click(switchInput);
     fireEvent.click(submitButton);
 
@@ -57,18 +62,23 @@ describe('Form page', () => {
     expect(dateInput.value).toEqual('');
     expect(countrySelect.value).toEqual('');
     expect(firstCheck.checked).toEqual(false);
+    expect(secondRadio.checked).toEqual(false);
+    expect(thirdRadio.checked).toEqual(false);
     expect(switchInput.checked).toEqual(false);
     expect(fileInput.value).toEqual('');
 
     fireEvent.change(userNameInput, { target: { value: 'Freddy Mora' } });
     fireEvent.change(dateInput, { target: { value: '2012-05-11' } });
     fireEvent.change(countrySelect, { target: { value: 'France' } });
+    fireEvent.click(secondRadio);
     fireEvent.click(submitButton);
 
     expect(userNameInput.value).toEqual('');
     expect(dateInput.value).toEqual('');
     expect(countrySelect.value).toEqual('');
     expect(firstCheck.checked).toEqual(false);
+    expect(secondRadio.checked).toEqual(false);
+    expect(thirdRadio.checked).toEqual(false);
     expect(switchInput.checked).toEqual(false);
     expect(fileInput.value).toEqual('');
 
