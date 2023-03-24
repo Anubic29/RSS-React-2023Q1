@@ -1,4 +1,4 @@
-import React, { Component, CSSProperties } from 'react';
+import React, { Component } from 'react';
 
 import styles from './Input.module.scss';
 
@@ -6,7 +6,7 @@ interface InputProps {
   id?: string;
   inputRef?: React.RefObject<HTMLInputElement>;
   type: 'text' | 'number' | 'date' | 'file';
-  className?: CSSProperties;
+  className?: string;
   isValid?: boolean;
   invalidMessage?: string;
 }
@@ -26,9 +26,12 @@ export default class Input extends Component<InputProps> {
           type={this.props.type}
           id={this.props.id}
           ref={this.props.inputRef}
+          data-testid="input"
         />
         {this.props.isValid === false && this.props.invalidMessage && (
-          <p className={styles['invalid-message']}>{this.props.invalidMessage}</p>
+          <p className={styles['invalid-message']} data-testid="error-message">
+            {this.props.invalidMessage}
+          </p>
         )}
       </div>
     );
