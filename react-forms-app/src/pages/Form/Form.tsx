@@ -1,7 +1,17 @@
+/* eslint-disable react/no-direct-mutation-state */
 import React, { Component } from 'react';
 import { Input, Select } from '../../components';
 
 import styles from './Form.module.scss';
+
+type Card = {
+  userName: string;
+  date: string;
+  country: string;
+  skills: string;
+  type: string;
+  file: string;
+};
 
 interface FormState {
   inputUsernameRef: React.LegacyRef<HTMLInputElement>;
@@ -14,6 +24,7 @@ interface FormState {
   inputSwitchRef: React.LegacyRef<HTMLInputElement>;
   inputFileRef: React.LegacyRef<HTMLInputElement>;
   errors: { [key: string]: string };
+  cards: Card[];
 }
 
 // eslint-disable-next-line @typescript-eslint/ban-types
@@ -29,9 +40,10 @@ export default class Form extends Component<{}, FormState> {
     inputSwitchRef: React.createRef<HTMLInputElement>(),
     inputFileRef: React.createRef<HTMLInputElement>(),
     errors: { userNameError: '', dateError: '', selectError: '', fileError: '' },
+    cards: [],
   };
 
-  validate = () => {
+  validateForm = () => {
     const errors: { [key: string]: string } = {};
 
     if (!this.state.inputUsernameRef.current?.value) {
@@ -57,18 +69,61 @@ export default class Form extends Component<{}, FormState> {
     return !Object.values(errors).some((error) => error.length > 0);
   };
 
+  resetForm = () => {
+    if (this.state.inputUsernameRef.current) {
+      this.state.inputUsernameRef.current.value = '';
+    }
+
+    if (this.state.inputDateRef.current) {
+      this.state.inputDateRef.current.value = '';
+    }
+
+    if (this.state.selectCountryRef.current) {
+      this.state.selectCountryRef.current.value = '';
+    }
+
+    if (this.state.firstCheckRef.current) {
+      this.state.firstCheckRef.current.checked = false;
+    }
+    if (this.state.secondCheckRef.current) {
+      this.state.secondCheckRef.current.checked = false;
+    }
+    if (this.state.thirdCheckRef.current) {
+      this.state.thirdCheckRef.current.checked = false;
+    }
+    if (this.state.fourthCheckRef.current) {
+      this.state.fourthCheckRef.current.checked = false;
+    }
+
+    if (this.state.inputSwitchRef.current) {
+      this.state.inputSwitchRef.current.checked = false;
+    }
+
+    if (this.state.inputFileRef.current) {
+      this.state.inputFileRef.current.value = '';
+    }
+  };
+
   onSubmitHandler = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    if (this.validate()) {
-      console.log(this.state.inputUsernameRef.current?.value);
-      console.log(this.state.inputDateRef.current?.value);
-      console.log(this.state.selectCountryRef.current?.value);
-      console.log(this.state.firstCheckRef.current?.checked);
-      console.log(this.state.secondCheckRef.current?.checked);
-      console.log(this.state.thirdCheckRef.current?.checked);
-      console.log(this.state.fourthCheckRef.current?.checked);
-      console.log(this.state.inputSwitchRef.current?.checked);
-      console.log(this.state.inputFileRef.current?.value);
+    if (this.validateForm()) {
+      const skills = [
+        this.state.firstCheckRef,
+        this.state.secondCheckRef,
+        this.state.thirdCheckRef,
+        this.state.fourthCheckRef,
+      ].filter((elem) => elem.current?.checked);
+      const card: Card = {
+        userName: `${this.state.inputUsernameRef.current?.value}`,
+        date: `${this.state.inputDateRef.current?.value}`,
+        country: `${this.state.selectCountryRef.current?.value}`,
+        skills: skills.length > 0 ? skills.map((elem) => elem.current?.value).join(', ') : 'None',
+        type: this.state.inputSwitchRef.current?.checked ? 'Premium' : 'Basic',
+        file: `${this.state.inputFileRef.current?.value}`,
+      };
+
+      this.setState({ cards: [...this.state.cards, card] });
+      this.resetForm();
     }
   };
 
