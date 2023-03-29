@@ -1,324 +1,290 @@
-/* eslint-disable react/no-direct-mutation-state */
-import React, { Component } from 'react';
+import React, { useCallback, useRef, useState } from 'react';
 import { Input, Select } from '../../components';
 import { FormCardList } from './components';
 import { FormCardType } from 'types/CardType';
 
 import styles from './Form.module.scss';
 
-interface FormState {
-  inputUsernameRef: React.LegacyRef<HTMLInputElement>;
-  inputDateRef: React.LegacyRef<HTMLInputElement>;
-  selectCountryRef: React.LegacyRef<HTMLSelectElement>;
-  firstCheckRef: React.LegacyRef<HTMLInputElement>;
-  secondCheckRef: React.LegacyRef<HTMLInputElement>;
-  thirdCheckRef: React.LegacyRef<HTMLInputElement>;
-  fourthCheckRef: React.LegacyRef<HTMLInputElement>;
-  firstRadioRef: React.LegacyRef<HTMLInputElement>;
-  secondRadioRef: React.LegacyRef<HTMLInputElement>;
-  thirdRadioRef: React.LegacyRef<HTMLInputElement>;
-  fourthRadioRef: React.LegacyRef<HTMLInputElement>;
-  inputSwitchRef: React.LegacyRef<HTMLInputElement>;
-  inputFileRef: React.LegacyRef<HTMLInputElement>;
-  errors: { [key: string]: string };
-  cards: FormCardType[];
-  saved: boolean;
-}
+function Form() {
+  const [cards, setCards] = useState<FormCardType[]>([]);
+  const [errors, setErrors] = useState<{ [key: string]: string }>({});
+  const [saved, setSaved] = useState(false);
 
-// eslint-disable-next-line @typescript-eslint/ban-types
-export default class Form extends Component<{}, FormState> {
-  state = {
-    inputUsernameRef: React.createRef<HTMLInputElement>(),
-    inputDateRef: React.createRef<HTMLInputElement>(),
-    selectCountryRef: React.createRef<HTMLSelectElement>(),
-    firstCheckRef: React.createRef<HTMLInputElement>(),
-    secondCheckRef: React.createRef<HTMLInputElement>(),
-    thirdCheckRef: React.createRef<HTMLInputElement>(),
-    fourthCheckRef: React.createRef<HTMLInputElement>(),
-    firstRadioRef: React.createRef<HTMLInputElement>(),
-    secondRadioRef: React.createRef<HTMLInputElement>(),
-    thirdRadioRef: React.createRef<HTMLInputElement>(),
-    fourthRadioRef: React.createRef<HTMLInputElement>(),
-    inputSwitchRef: React.createRef<HTMLInputElement>(),
-    inputFileRef: React.createRef<HTMLInputElement>(),
-    errors: { userNameError: '', dateError: '', selectError: '', radioError: '' },
-    cards: [],
-    saved: false,
-  };
+  const inputUsernameRef = useRef<HTMLInputElement>(null);
+  const inputDateRef = useRef<HTMLInputElement>(null);
+  const selectCountryRef = useRef<HTMLSelectElement>(null);
+  const firstCheckRef = useRef<HTMLInputElement>(null);
+  const secondCheckRef = useRef<HTMLInputElement>(null);
+  const thirdCheckRef = useRef<HTMLInputElement>(null);
+  const fourthCheckRef = useRef<HTMLInputElement>(null);
+  const firstRadioRef = useRef<HTMLInputElement>(null);
+  const secondRadioRef = useRef<HTMLInputElement>(null);
+  const thirdRadioRef = useRef<HTMLInputElement>(null);
+  const fourthRadioRef = useRef<HTMLInputElement>(null);
+  const inputSwitchRef = useRef<HTMLInputElement>(null);
+  const inputFileRef = useRef<HTMLInputElement>(null);
 
-  validateForm = () => {
+  const validateForm = useCallback(() => {
     const errors: { [key: string]: string } = {};
 
-    if (!this.state.inputUsernameRef.current?.value) {
+    if (!inputUsernameRef.current?.value) {
       errors.userNameError = "Username can't be empty";
-    } else if (this.state.inputUsernameRef.current?.value.length < 4) {
+    } else if (inputUsernameRef.current?.value.length < 4) {
       errors.userNameError = 'Username must be longer than 3 letters';
     }
 
-    if (!this.state.inputDateRef.current?.value) {
+    if (!inputDateRef.current?.value) {
       errors.dateError = "Date can't be empty";
     }
 
-    if (!this.state.selectCountryRef.current?.value) {
+    if (!selectCountryRef.current?.value) {
       errors.selectError = 'You must select a country';
     }
 
     if (
-      !this.state.firstRadioRef.current?.checked &&
-      !this.state.secondRadioRef.current?.checked &&
-      !this.state.thirdRadioRef.current?.checked &&
-      !this.state.fourthRadioRef.current?.checked
+      !firstRadioRef.current?.checked &&
+      !secondRadioRef.current?.checked &&
+      !thirdRadioRef.current?.checked &&
+      !fourthRadioRef.current?.checked
     ) {
       errors.radioError = 'You must select a language';
     }
 
-    this.setState({ errors });
+    setErrors(errors);
 
     return !Object.values(errors).some((error) => error.length > 0);
-  };
+  }, []);
 
-  resetForm = () => {
-    if (this.state.inputUsernameRef.current) {
-      this.state.inputUsernameRef.current.value = '';
-    }
-
-    if (this.state.inputDateRef.current) {
-      this.state.inputDateRef.current.value = '';
+  const resetForm = useCallback(() => {
+    if (inputUsernameRef.current) {
+      inputUsernameRef.current.value = '';
     }
 
-    if (this.state.selectCountryRef.current) {
-      this.state.selectCountryRef.current.value = '';
+    if (inputDateRef.current) {
+      inputDateRef.current.value = '';
     }
 
-    if (this.state.firstCheckRef.current) {
-      this.state.firstCheckRef.current.checked = false;
-    }
-    if (this.state.secondCheckRef.current) {
-      this.state.secondCheckRef.current.checked = false;
-    }
-    if (this.state.thirdCheckRef.current) {
-      this.state.thirdCheckRef.current.checked = false;
-    }
-    if (this.state.fourthCheckRef.current) {
-      this.state.fourthCheckRef.current.checked = false;
+    if (selectCountryRef.current) {
+      selectCountryRef.current.value = '';
     }
 
-    if (this.state.firstRadioRef.current) {
-      this.state.firstRadioRef.current.checked = false;
+    if (firstCheckRef.current) {
+      firstCheckRef.current.checked = false;
     }
-    if (this.state.secondRadioRef.current) {
-      this.state.secondRadioRef.current.checked = false;
+    if (secondCheckRef.current) {
+      secondCheckRef.current.checked = false;
     }
-    if (this.state.thirdRadioRef.current) {
-      this.state.thirdRadioRef.current.checked = false;
+    if (thirdCheckRef.current) {
+      thirdCheckRef.current.checked = false;
     }
-    if (this.state.fourthRadioRef.current) {
-      this.state.fourthRadioRef.current.checked = false;
-    }
-
-    if (this.state.inputSwitchRef.current) {
-      this.state.inputSwitchRef.current.checked = false;
+    if (fourthCheckRef.current) {
+      fourthCheckRef.current.checked = false;
     }
 
-    if (this.state.inputFileRef.current) {
-      this.state.inputFileRef.current.value = '';
+    if (firstRadioRef.current) {
+      firstRadioRef.current.checked = false;
     }
-  };
-
-  onSubmitHandler = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    if (this.validateForm()) {
-      const skills = [
-        this.state.firstCheckRef,
-        this.state.secondCheckRef,
-        this.state.thirdCheckRef,
-        this.state.fourthCheckRef,
-      ].filter((elem) => elem.current?.checked);
-      const language = [
-        this.state.firstRadioRef,
-        this.state.secondRadioRef,
-        this.state.thirdRadioRef,
-        this.state.fourthRadioRef,
-      ].filter((elem) => elem.current?.checked);
-      const card: FormCardType = {
-        userName: `${this.state.inputUsernameRef.current?.value}`,
-        date: `${this.state.inputDateRef.current?.value}`,
-        country: `${this.state.selectCountryRef.current?.value}`,
-        skills: skills.length > 0 ? skills.map((elem) => elem.current?.value).join(', ') : 'None',
-        language: `${language[0].current?.value}`,
-        type: this.state.inputSwitchRef.current?.checked ? 'Premium' : 'Basic',
-        file: `${this.state.inputFileRef.current?.value}`,
-      };
-
-      if (card.file === '') card.file = 'None file';
-
-      this.setState({ cards: [...this.state.cards, card], saved: true });
-      setTimeout(() => {
-        this.setState({ saved: false });
-      }, 3000);
-      this.resetForm();
+    if (secondRadioRef.current) {
+      secondRadioRef.current.checked = false;
     }
-  };
+    if (thirdRadioRef.current) {
+      thirdRadioRef.current.checked = false;
+    }
+    if (fourthRadioRef.current) {
+      fourthRadioRef.current.checked = false;
+    }
 
-  render() {
-    return (
-      <div className={styles['form-page']} data-testid="form-page">
-        <div className={styles['content']}>
-          <form className={styles['form']} onSubmit={this.onSubmitHandler}>
-            <div className={styles['input-block']}>
-              <label className={styles['label']} htmlFor="user-name">
-                Username
-              </label>
-              <Input
-                type="text"
-                id="user-name"
-                inputRef={this.state.inputUsernameRef}
-                isValid={!this.state.errors.userNameError}
-                invalidMessage={this.state.errors.userNameError}
-              />
-            </div>
-            <div className={styles['input-block']}>
-              <label className={styles['label']} htmlFor="date">
-                Birthday
-              </label>
-              <Input
-                type="date"
-                id="date"
-                inputRef={this.state.inputDateRef}
-                isValid={!this.state.errors.dateError}
-                invalidMessage={this.state.errors.dateError}
-              />
-            </div>
-            <div className={styles['input-block']}>
-              <label className={styles['label']} htmlFor="select">
-                Country
-              </label>
-              <Select
-                id="select"
-                selectRef={this.state.selectCountryRef}
-                title="country"
-                values={['Ukraine', 'USA', 'Mexico', 'Spain', 'France']}
-                isValid={!this.state.errors.selectError}
-                invalidMessage={this.state.errors.selectError}
-              />
-            </div>
-            <div className={styles['input-block']}>
-              <p className={styles['label']}>Skills</p>
-              <label className={styles['check-block']}>
-                <input
-                  className={styles['input']}
-                  type="checkbox"
-                  ref={this.state.firstCheckRef}
-                  value="HTML"
-                />
-                HTML
-              </label>
-              <label className={styles['check-block']}>
-                <input
-                  className={styles['input']}
-                  type="checkbox"
-                  ref={this.state.secondCheckRef}
-                  value="CSS"
-                />
-                CSS
-              </label>
-              <label className={styles['check-block']}>
-                <input
-                  className={styles['input']}
-                  type="checkbox"
-                  ref={this.state.thirdCheckRef}
-                  value="JavaScript"
-                />
-                JavaScript
-              </label>
-              <label className={styles['check-block']}>
-                <input
-                  className={styles['input']}
-                  type="checkbox"
-                  ref={this.state.fourthCheckRef}
-                  value="React"
-                />
-                React
-              </label>
-            </div>
-            <div className={styles['input-block']}>
-              <p className={styles['label']}>Language</p>
-              <label className={styles['check-block']}>
-                <input
-                  className={styles['input']}
-                  name="language"
-                  type="radio"
-                  ref={this.state.firstRadioRef}
-                  value="English"
-                />
-                English
-              </label>
-              <label className={styles['check-block']}>
-                <input
-                  className={styles['input']}
-                  name="language"
-                  type="radio"
-                  ref={this.state.secondRadioRef}
-                  value="Spanish"
-                />
-                Spanish
-              </label>
-              <label className={styles['check-block']}>
-                <input
-                  className={styles['input']}
-                  name="language"
-                  type="radio"
-                  ref={this.state.thirdRadioRef}
-                  value="Chinese"
-                />
-                Chinese
-              </label>
-              <label className={styles['check-block']}>
-                <input
-                  className={styles['input']}
-                  name="language"
-                  type="radio"
-                  ref={this.state.fourthRadioRef}
-                  value="Ukrainian"
-                />
-                Ukrainian
-              </label>
-              {this.state.errors.radioError && (
-                <p className={styles['error-message']} data-testid="error-message">
-                  {this.state.errors.radioError}
-                </p>
-              )}
-            </div>
-            <div className={styles['input-block']}>
-              <p className={styles['label']}>Type</p>
-              <div className={styles['switch-block']}>
-                <p>Basic</p>
-                <label className={styles['switch']}>
-                  <input type="checkbox" ref={this.state.inputSwitchRef} data-testid="switch" />
-                  <span className={styles['slider']}></span>
-                </label>
-                <p>Premium</p>
-              </div>
-            </div>
-            <div className={styles['input-block']}>
-              <label className={styles['label']} htmlFor="file">
-                File
-              </label>
-              <Input type="file" id="file" inputRef={this.state.inputFileRef} />
-            </div>
-            <div className={styles['btn-block']}>
-              <button className={styles['button']} type="submit">
-                Submit
-              </button>
-              {this.state.saved && <div className={styles['saved']}>Saved</div>}
-            </div>
-          </form>
-          <div className={styles['card-list-section']}>
-            <h1 className={styles['title']}>Card List</h1>
-            <FormCardList cards={this.state.cards} />
+    if (inputSwitchRef.current) {
+      inputSwitchRef.current.checked = false;
+    }
+
+    if (inputFileRef.current) {
+      inputFileRef.current.value = '';
+    }
+  }, []);
+
+  const onSubmitHandler = useCallback(
+    (event: React.FormEvent<HTMLFormElement>) => {
+      event.preventDefault();
+      if (validateForm()) {
+        const skills = [firstCheckRef, secondCheckRef, thirdCheckRef, fourthCheckRef].filter(
+          (elem) => elem.current?.checked
+        );
+        const language = [firstRadioRef, secondRadioRef, thirdRadioRef, fourthRadioRef].filter(
+          (elem) => elem.current?.checked
+        );
+        const card: FormCardType = {
+          userName: `${inputUsernameRef.current?.value}`,
+          date: `${inputDateRef.current?.value}`,
+          country: `${selectCountryRef.current?.value}`,
+          skills: skills.length > 0 ? skills.map((elem) => elem.current?.value).join(', ') : 'None',
+          language: `${language[0].current?.value}`,
+          type: inputSwitchRef.current?.checked ? 'Premium' : 'Basic',
+          file: `${inputFileRef.current?.value}`,
+        };
+
+        if (card.file === '') card.file = 'None file';
+
+        setCards((prev) => prev.concat([card]));
+        setSaved(true);
+        setTimeout(() => {
+          setSaved(false);
+        }, 3000);
+        resetForm();
+      }
+    },
+    [validateForm, resetForm]
+  );
+
+  return (
+    <div className={styles['form-page']} data-testid="form-page">
+      <div className={styles['content']}>
+        <form className={styles['form']} onSubmit={onSubmitHandler}>
+          <div className={styles['input-block']}>
+            <label className={styles['label']} htmlFor="user-name">
+              Username
+            </label>
+            <Input
+              type="text"
+              id="user-name"
+              inputRef={inputUsernameRef}
+              isValid={!errors.userNameError}
+              invalidMessage={errors.userNameError}
+            />
           </div>
+          <div className={styles['input-block']}>
+            <label className={styles['label']} htmlFor="date">
+              Birthday
+            </label>
+            <Input
+              type="date"
+              id="date"
+              inputRef={inputDateRef}
+              isValid={!errors.dateError}
+              invalidMessage={errors.dateError}
+            />
+          </div>
+          <div className={styles['input-block']}>
+            <label className={styles['label']} htmlFor="select">
+              Country
+            </label>
+            <Select
+              id="select"
+              selectRef={selectCountryRef}
+              title="country"
+              values={['Ukraine', 'USA', 'Mexico', 'Spain', 'France']}
+              isValid={!errors.selectError}
+              invalidMessage={errors.selectError}
+            />
+          </div>
+          <div className={styles['input-block']}>
+            <p className={styles['label']}>Skills</p>
+            <label className={styles['check-block']}>
+              <input className={styles['input']} type="checkbox" ref={firstCheckRef} value="HTML" />
+              HTML
+            </label>
+            <label className={styles['check-block']}>
+              <input className={styles['input']} type="checkbox" ref={secondCheckRef} value="CSS" />
+              CSS
+            </label>
+            <label className={styles['check-block']}>
+              <input
+                className={styles['input']}
+                type="checkbox"
+                ref={thirdCheckRef}
+                value="JavaScript"
+              />
+              JavaScript
+            </label>
+            <label className={styles['check-block']}>
+              <input
+                className={styles['input']}
+                type="checkbox"
+                ref={fourthCheckRef}
+                value="React"
+              />
+              React
+            </label>
+          </div>
+          <div className={styles['input-block']}>
+            <p className={styles['label']}>Language</p>
+            <label className={styles['check-block']}>
+              <input
+                className={styles['input']}
+                name="language"
+                type="radio"
+                ref={firstRadioRef}
+                value="English"
+              />
+              English
+            </label>
+            <label className={styles['check-block']}>
+              <input
+                className={styles['input']}
+                name="language"
+                type="radio"
+                ref={secondRadioRef}
+                value="Spanish"
+              />
+              Spanish
+            </label>
+            <label className={styles['check-block']}>
+              <input
+                className={styles['input']}
+                name="language"
+                type="radio"
+                ref={thirdRadioRef}
+                value="Chinese"
+              />
+              Chinese
+            </label>
+            <label className={styles['check-block']}>
+              <input
+                className={styles['input']}
+                name="language"
+                type="radio"
+                ref={fourthRadioRef}
+                value="Ukrainian"
+              />
+              Ukrainian
+            </label>
+            {errors.radioError && (
+              <p className={styles['error-message']} data-testid="error-message">
+                {errors.radioError}
+              </p>
+            )}
+          </div>
+          <div className={styles['input-block']}>
+            <p className={styles['label']}>Type</p>
+            <div className={styles['switch-block']}>
+              <p>Basic</p>
+              <label className={styles['switch']}>
+                <input type="checkbox" ref={inputSwitchRef} data-testid="switch" />
+                <span className={styles['slider']}></span>
+              </label>
+              <p>Premium</p>
+            </div>
+          </div>
+          <div className={styles['input-block']}>
+            <label className={styles['label']} htmlFor="file">
+              File
+            </label>
+            <Input type="file" id="file" inputRef={inputFileRef} />
+          </div>
+          <div className={styles['btn-block']}>
+            <button className={styles['button']} type="submit">
+              Submit
+            </button>
+            {saved && <div className={styles['saved']}>Saved</div>}
+          </div>
+        </form>
+        <div className={styles['card-list-section']}>
+          <h1 className={styles['title']}>Card List</h1>
+          <FormCardList cards={cards} />
         </div>
       </div>
-    );
-  }
+    </div>
+  );
 }
+
+export default Form;
