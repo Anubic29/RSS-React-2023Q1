@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useMemo, useState } from 'react';
 import { SubmitHandler, useForm, FieldValues } from 'react-hook-form';
 import { Input, Select } from '../../components';
 import { FormCardList } from './components';
@@ -11,6 +11,10 @@ function Form() {
   const [cards, setCards] = useState<FormCardType[]>([]);
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
   const [saved, setSaved] = useState(false);
+
+  const countries = useMemo(() => ['Ukraine', 'USA', 'Mexico', 'Spain', 'France'], []);
+  const skills = useMemo(() => ['HTML', 'CSS', 'JavaScript', 'React'], []);
+  const languages = useMemo(() => ['English', 'Spanish', 'Chinese', 'Ukrainian'], []);
 
   const validateForm = useCallback((data: FieldValues) => {
     const errors: { [key: string]: string } = {};
@@ -97,7 +101,7 @@ function Form() {
             <Select
               id="select"
               title="country"
-              values={['Ukraine', 'USA', 'Mexico', 'Spain', 'France']}
+              values={countries}
               isValid={!errors.selectError}
               invalidMessage={errors.selectError}
               register={register('country')}
@@ -105,81 +109,31 @@ function Form() {
           </div>
           <div className={styles['input-block']}>
             <p className={styles['label']}>Skills</p>
-            <label className={styles['check-block']}>
-              <input
-                className={styles['input']}
-                type="checkbox"
-                value="HTML"
-                {...register('skills')}
-              />
-              HTML
-            </label>
-            <label className={styles['check-block']}>
-              <input
-                className={styles['input']}
-                type="checkbox"
-                value="CSS"
-                {...register('skills')}
-              />
-              CSS
-            </label>
-            <label className={styles['check-block']}>
-              <input
-                className={styles['input']}
-                type="checkbox"
-                value="JavaScript"
-                {...register('skills')}
-              />
-              JavaScript
-            </label>
-            <label className={styles['check-block']}>
-              <input
-                className={styles['input']}
-                type="checkbox"
-                value="React"
-                {...register('skills')}
-              />
-              React
-            </label>
+            {skills.map((skill, idx) => (
+              <label className={styles['check-block']} key={idx}>
+                <input
+                  className={styles['input']}
+                  type="checkbox"
+                  value={skill}
+                  {...register('skills')}
+                />
+                {skill}
+              </label>
+            ))}
           </div>
           <div className={styles['input-block']}>
             <p className={styles['label']}>Language</p>
-            <label className={styles['check-block']}>
-              <input
-                className={styles['input']}
-                type="radio"
-                value="English"
-                {...register('language')}
-              />
-              English
-            </label>
-            <label className={styles['check-block']}>
-              <input
-                className={styles['input']}
-                type="radio"
-                value="Spanish"
-                {...register('language')}
-              />
-              Spanish
-            </label>
-            <label className={styles['check-block']}>
-              <input
-                className={styles['input']}
-                type="radio"
-                value="Chinese"
-                {...register('language')}
-              />
-              Chinese
-            </label>
-            <label className={styles['check-block']}>
-              <input
-                className={styles['input']}
-                type="radio"
-                value="Ukrainian"
-                {...register('language')}
-              />
-              Ukrainian
-            </label>
+            {languages.map((language, idx) => (
+              <label className={styles['check-block']} key={idx}>
+                <input
+                  className={styles['input']}
+                  type="radio"
+                  value={language}
+                  {...register('language')}
+                />
+                {language}
+              </label>
+            ))}
             {errors.radioError && (
               <p className={styles['error-message']} data-testid="error-message">
                 {errors.radioError}
