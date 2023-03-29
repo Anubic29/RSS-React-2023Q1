@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { UseFormRegisterReturn } from 'react-hook-form';
 
 import styles from './Select.module.scss';
 
@@ -10,6 +11,7 @@ interface SelectProps {
   className?: string;
   isValid?: boolean;
   invalidMessage?: string;
+  register?: UseFormRegisterReturn;
 }
 
 export default class Select extends Component<SelectProps> {
@@ -27,6 +29,7 @@ export default class Select extends Component<SelectProps> {
           id={this.props.id}
           ref={this.props.selectRef}
           data-testid="select"
+          {...this.props.register}
         >
           <option value="">Select {this.props.title}</option>
           {this.props.values.length > 0 &&

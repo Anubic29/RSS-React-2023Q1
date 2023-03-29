@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { UseFormRegisterReturn } from 'react-hook-form';
 
 import styles from './Input.module.scss';
 
@@ -9,6 +10,7 @@ interface InputProps {
   className?: string;
   isValid?: boolean;
   invalidMessage?: string;
+  register?: UseFormRegisterReturn;
 }
 
 export default class Input extends Component<InputProps> {
@@ -27,6 +29,7 @@ export default class Input extends Component<InputProps> {
           id={this.props.id}
           ref={this.props.inputRef}
           data-testid="input"
+          {...this.props.register}
         />
         {this.props.isValid === false && this.props.invalidMessage && (
           <p className={styles['invalid-message']} data-testid="error-message">
