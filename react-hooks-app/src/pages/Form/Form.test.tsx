@@ -1,6 +1,14 @@
 import React from 'react';
 import { fireEvent, render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import Form from './Form';
+
+function setup(jsx: JSX.Element) {
+  return {
+    user: userEvent.setup(),
+    ...render(jsx),
+  };
+}
 
 describe('Form page', () => {
   it('should be in document', () => {
@@ -10,13 +18,14 @@ describe('Form page', () => {
     expect(formPage).toBeInTheDocument();
   });
 
-  it('submits the form with invalid input', () => {
-    render(<Form />);
+  it('submits the form with invalid input', async () => {
+    // render(<Form />);
+    const { user } = setup(<Form />);
 
     const userNameInput = screen.getByLabelText('Username');
     const submitButton = screen.getByRole('button', { name: 'Submit' });
 
-    fireEvent.click(submitButton);
+    await user.click(submitButton);
 
     const errorMessage1 = screen.getByText("Username can't be empty");
     expect(errorMessage1).toBeInTheDocument();
@@ -28,7 +37,7 @@ describe('Form page', () => {
     expect(errorMessage4).toBeInTheDocument();
 
     fireEvent.change(userNameInput, { target: { value: 'as' } });
-    fireEvent.click(submitButton);
+    await user.click(submitButton);
 
     const errorMessage5 = screen.getByText('Username must be longer than 3 letters');
     expect(errorMessage5).toBeInTheDocument();
@@ -37,8 +46,8 @@ describe('Form page', () => {
     expect(emptyMessage).toBeInTheDocument();
   });
 
-  it('submits the form with valid input', () => {
-    render(<Form />);
+  it('submits the form with valid input', async () => {
+    const { user } = setup(<Form />);
 
     const userNameInput = screen.getByLabelText('Username') as HTMLInputElement;
     const dateInput = screen.getByLabelText('Birthday') as HTMLInputElement;
@@ -56,7 +65,7 @@ describe('Form page', () => {
     fireEvent.click(firstCheck);
     fireEvent.click(thirdRadio);
     fireEvent.click(switchInput);
-    fireEvent.click(submitButton);
+    await user.click(submitButton);
 
     expect(userNameInput.value).toEqual('');
     expect(dateInput.value).toEqual('');
@@ -71,7 +80,7 @@ describe('Form page', () => {
     fireEvent.change(dateInput, { target: { value: '2012-05-11' } });
     fireEvent.change(countrySelect, { target: { value: 'France' } });
     fireEvent.click(secondRadio);
-    fireEvent.click(submitButton);
+    await user.click(submitButton);
 
     expect(userNameInput.value).toEqual('');
     expect(dateInput.value).toEqual('');
