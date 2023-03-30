@@ -19,7 +19,6 @@ describe('Form page', () => {
   });
 
   it('submits the form with invalid input', async () => {
-    // render(<Form />);
     const { user } = setup(<Form />);
 
     const userNameInput = screen.getByLabelText('Username');
@@ -93,5 +92,31 @@ describe('Form page', () => {
 
     const submittedCard = screen.getAllByTestId('form-card');
     expect(submittedCard.length).toEqual(2);
+  });
+
+  it('saved text', async () => {
+    const { user } = setup(<Form />);
+
+    const userNameInput = screen.getByLabelText('Username') as HTMLInputElement;
+    const dateInput = screen.getByLabelText('Birthday') as HTMLInputElement;
+    const countrySelect = screen.getByLabelText('Country') as HTMLSelectElement;
+    const thirdRadio = screen.getByLabelText('Chinese') as HTMLInputElement;
+    const switchInput = screen.getByTestId('switch') as HTMLInputElement;
+    const submitButton = screen.getByRole('button', { name: 'Submit' });
+
+    fireEvent.change(userNameInput, { target: { value: 'John Doe' } });
+    fireEvent.change(dateInput, { target: { value: '2000-01-01' } });
+    fireEvent.change(countrySelect, { target: { value: 'USA' } });
+    fireEvent.click(thirdRadio);
+    fireEvent.click(switchInput);
+    await user.click(submitButton);
+
+    const savedText = screen.getByTestId('saved-text');
+    expect(savedText).toBeInTheDocument();
+
+    await new Promise((res) => {
+      setTimeout(() => res(true), 3000);
+    });
+    expect(savedText).not.toBeInTheDocument();
   });
 });

@@ -161,7 +161,11 @@ function Form() {
             <button className={styles['button']} type="submit">
               Submit
             </button>
-            {saved && <div className={styles['saved']}>Saved</div>}
+            {saved && (
+              <div className={styles['saved']} data-testid="saved-text">
+                Saved
+              </div>
+            )}
           </div>
         </form>
         <div className={styles['card-list-section']}>
