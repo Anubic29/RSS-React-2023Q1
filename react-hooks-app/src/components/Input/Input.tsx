@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { UseFormRegisterReturn } from 'react-hook-form';
 
 import styles from './Input.module.scss';
@@ -13,30 +13,28 @@ interface InputProps {
   register?: UseFormRegisterReturn;
 }
 
-export default class Input extends Component<InputProps> {
-  render() {
-    const classNames = this.props.className
-      ? `${this.props.className} ${styles['input']}`
-      : styles['input'];
+function Input(props: InputProps) {
+  const classNames = props.className ? `${props.className} ${styles['input']}` : styles['input'];
 
-    return (
-      <div className={styles['input-block']}>
-        <input
-          className={
-            this.props.isValid === false ? `${classNames} ${styles['input-invalid']}` : classNames
-          }
-          type={this.props.type}
-          id={this.props.id}
-          ref={this.props.inputRef}
-          data-testid="input"
-          {...this.props.register}
-        />
-        {this.props.isValid === false && this.props.invalidMessage && (
-          <p className={styles['invalid-message']} data-testid="error-message">
-            {this.props.invalidMessage}
-          </p>
-        )}
-      </div>
-    );
-  }
+  return (
+    <div className={styles['input-block']}>
+      <input
+        className={
+          props.isValid === false ? `${classNames} ${styles['input-invalid']}` : classNames
+        }
+        type={props.type}
+        id={props.id}
+        ref={props.inputRef}
+        data-testid="input"
+        {...props.register}
+      />
+      {props.isValid === false && props.invalidMessage && (
+        <p className={styles['invalid-message']} data-testid="error-message">
+          {props.invalidMessage}
+        </p>
+      )}
+    </div>
+  );
 }
+
+export default Input;
