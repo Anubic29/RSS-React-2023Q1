@@ -22,6 +22,7 @@ describe('Form page', () => {
     const { user } = setup(<Form />);
 
     const userNameInput = screen.getByLabelText('Username');
+    const dateInput = screen.getByLabelText('Birthday') as HTMLInputElement;
     const submitButton = screen.getByRole('button', { name: 'Submit' });
 
     await user.click(submitButton);
@@ -36,10 +37,19 @@ describe('Form page', () => {
     expect(errorMessage4).toBeInTheDocument();
 
     fireEvent.change(userNameInput, { target: { value: 'as' } });
+    fireEvent.change(dateInput, { target: { value: '2030-01-01' } });
     await user.click(submitButton);
 
     const errorMessage5 = screen.getByText('Username must be longer than 3 letters');
     expect(errorMessage5).toBeInTheDocument();
+    const errorMessage6 = screen.getByText("Date can't be in the future");
+    expect(errorMessage6).toBeInTheDocument();
+
+    fireEvent.change(userNameInput, { target: { value: 'ahasfhjsgs' } });
+    await user.click(submitButton);
+
+    const errorMessage7 = screen.getByText('Username must start with a capital letter');
+    expect(errorMessage7).toBeInTheDocument();
 
     const emptyMessage = screen.getByTestId('empty-message');
     expect(emptyMessage).toBeInTheDocument();
