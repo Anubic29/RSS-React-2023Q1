@@ -23,6 +23,8 @@ function Form() {
       errors.userNameError = "Username can't be empty";
     } else if (data['userName'].length < 4) {
       errors.userNameError = 'Username must be longer than 3 letters';
+    } else if (data['userName'][0] !== `${data['userName'][0]}`.toUpperCase()) {
+      errors.userNameError = 'Username must start with a capital letter';
     }
 
     if (!data['date']) {
