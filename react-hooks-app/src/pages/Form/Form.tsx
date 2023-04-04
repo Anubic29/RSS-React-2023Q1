@@ -159,7 +159,12 @@ function Form() {
             <label className={styles['label']} htmlFor="file">
               File
             </label>
-            <Input type="file" id="file" register={register('file')} />
+            <Input
+              type="file"
+              id="file"
+              register={register('file')}
+              accept="image/png, image/jpeg"
+            />
           </div>
           <div className={styles['btn-block']}>
             <button className={styles['button']} type="submit">

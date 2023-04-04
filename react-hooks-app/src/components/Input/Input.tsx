@@ -7,6 +7,7 @@ interface InputProps {
   id?: string;
   inputRef?: React.RefObject<HTMLInputElement>;
   type: 'text' | 'number' | 'date' | 'file';
+  accept?: string;
   className?: string;
   isValid?: boolean;
   invalidMessage?: string;
@@ -26,6 +27,7 @@ function Input(props: InputProps) {
         id={props.id}
         ref={props.inputRef}
         data-testid="input"
+        accept={props.accept}
         {...props.register}
       />
       {props.isValid === false && props.invalidMessage && (
