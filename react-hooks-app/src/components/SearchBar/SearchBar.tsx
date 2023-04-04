@@ -1,46 +1,40 @@
-import React, { ChangeEvent, Component } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { MdSearch } from 'react-icons/md';
 
 import styles from './SearchBar.module.scss';
-
-interface SearchBarState {
-  value: string;
-}
 
 interface SearchBarProps {
   onChangeHandler: (value: string) => void;
 }
 
-export default class SearchBar extends Component<SearchBarProps, SearchBarState> {
-  state = {
-    value: '',
-  };
+function SearchBar(props: SearchBarProps) {
+  const refInput = useRef<HTMLInputElement>(null);
 
-  componentDidMount = () => {
-    const value = localStorage.getItem('search') || '';
-    this.setState({ value }, () => this.props.onChangeHandler(value));
-  };
+  useEffect(() => {
+    const current = refInput.current;
+    if (current) {
+      current.value = localStorage.getItem('search') || '';
+      props.onChangeHandler(current.value);
+    }
 
-  componentWillUnmount = () => {
-    localStorage.setItem('search', this.state.value);
-  };
+    return () => {
+      localStorage.setItem('search', current?.value || '');
+    };
+  }, []);
 
-  onInputChange = (e: ChangeEvent<HTMLInputElement>) => {
-    this.setState({ value: e.target.value }, () => this.props.onChangeHandler(e.target.value));
-  };
-
-  render() {
-    return (
-      <div className={styles['search']} data-testid="search-bar">
-        <MdSearch className={styles['search__icon']} />
-        <input
-          type="text"
-          className={styles['search__input']}
-          value={this.state.value}
-          onChange={this.onInputChange}
-          data-testid="search-bar-input"
-        />
-      </div>
-    );
-  }
+  return (
+    <div className={styles['search']} data-testid="search-bar">
+      <MdSearch className={styles['search__icon']} />
+      <input
+        defaultValue={''}
+        type="text"
+        className={styles['search__input']}
+        onChange={(e) => props.onChangeHandler(e.target.value)}
+        data-testid="search-bar-input"
+        ref={refInput}
+      />
+    </div>
+  );
 }
+
+export default SearchBar;
