@@ -29,6 +29,8 @@ function Form() {
 
     if (!data['date']) {
       errors.dateError = "Date can't be empty";
+    } else if (new Date(data['date']) > new Date()) {
+      errors.dateError = "Date can't be in the future";
     }
 
     if (!data['country']) {
