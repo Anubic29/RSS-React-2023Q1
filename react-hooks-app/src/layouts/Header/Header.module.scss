@@ -1,0 +1,45 @@
+@import '../../theme/variables.scss';
+
+.Header {
+  width: 100%;
+  background-color: $colorBgHeader;
+  display: flex;
+  justify-content: center;
+  padding: 10px 0;
+
+  &--inner {
+    max-width: $maxWidthContent;
+    width: 100%;
+  }
+}
+
+.navigation {
+  font-size: 1.6rem;
+
+  ul {
+    display: flex;
+  }
+
+  li {
+    list-style: none;
+    margin: 0 5px;
+  }
+
+  .link {
+    text-decoration: none;
+    color: $colorText;
+    padding: 3px 5px;
+    border-radius: 5px;
+    background-color: transparent;
+
+    transition: background-color .3s ease;
+    
+    &:hover {
+      background-color: $colorPrimary;
+    }
+
+    &.active {
+      background-color: $colorPrimary;
+    }
+  }
+}
