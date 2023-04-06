@@ -1,11 +1,11 @@
 import React from 'react';
-import { CardType } from '../../../../types/CardType';
+import { CharacterType } from 'types/CharacterType';
 import { Card } from '../';
 
 import styles from './CardList.module.scss';
 
 interface CardListProps {
-  cards: CardType[];
+  cards: CharacterType[];
 }
 
 function CardList(props: CardListProps) {
@@ -14,12 +14,7 @@ function CardList(props: CardListProps) {
       {props.cards.length > 0 ? (
         props.cards.map((card, idx) => (
           <div className={styles['card-block']} key={idx}>
-            <Card
-              title={card.title}
-              image={card.image}
-              genreList={card.genreList}
-              price={`${card.price}`}
-            />
+            <Card data={card} />
           </div>
         ))
       ) : (

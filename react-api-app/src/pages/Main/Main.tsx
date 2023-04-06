@@ -1,13 +1,28 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import api from '../../api';
 import { CardList } from './components';
 import { SearchBar } from '../../components/';
-
-import { cards } from '../../fakeData/cards';
+import { CharacterType } from 'types/CharacterType';
 
 import styles from './Main.module.scss';
 
 function Main() {
   const [searchValue, setSearchValue] = useState('');
+  const [characterArr, setCharacterArr] = useState<CharacterType[]>([]);
+
+  useEffect(() => {
+    (async () => {
+      const response = await api.character.getDataAll();
+      console.log(response);
+      const data = response.data;
+      if (response.status === 200 && data) {
+        setCharacterArr(response.data.results);
+      }
+    })();
+  }, []);
+
+  // useEffect(() => console.log(characterArr), [characterArr]);
+  // useEffect(() => console.log(searchValue), [searchValue]);
 
   return (
     <div className={styles['main']} data-testid="main-page">
@@ -17,13 +32,7 @@ function Main() {
           <SearchBar onChangeHandler={(value: string) => setSearchValue(value)} />
         </div>
         <div className={styles['card-list-block']}>
-          <CardList
-            cards={cards.filter(
-              (card) =>
-                card.title.includes(searchValue) ||
-                card.genreList.some((genre) => genre.includes(searchValue))
-            )}
-          />
+          <CardList cards={characterArr} />
         </div>
       </div>
     </div>

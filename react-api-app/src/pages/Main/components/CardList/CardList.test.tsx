@@ -1,20 +1,33 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import CardList from './CardList';
-import { CardType } from 'types/CardType';
+import { CharacterType } from 'types/CharacterType';
 
-const mockCardListData: CardType[] = [
+const mockCardListData: CharacterType[] = [
   {
-    title: 'Total War Rome',
-    image: 'https://cdn.cloudflare.steamstatic.com/steam/apps/885970/header.jpg?t=1622505859',
-    genreList: ['Strategy', 'RTS'],
-    price: 345,
+    gender: 'Male',
+    id: 1,
+    image: 'https://rickandmortyapi.com/api/character/avatar/1.jpeg',
+    location: { name: 'Citadel of Ricks', url: 'https://rickandmortyapi.com/api/location/3' },
+    name: 'Rick Sanchez',
+    origin: { name: 'Earth (C-137)', url: 'https://rickandmortyapi.com/api/location/1' },
+    species: 'Human',
+    status: 'Alive',
+    type: '',
   },
   {
-    title: 'Iron Harvest',
-    image: 'https://cdn.akamai.steamstatic.com/steam/apps/826630/header.jpg?t=1669391758',
-    genreList: ['Strategy', 'Action', 'RTS', 'Casual'],
-    price: 379,
+    gender: 'unknown',
+    id: 13,
+    image: 'https://rickandmortyapi.com/api/character/avatar/13.jpeg',
+    location: {
+      name: 'Earth (Replacement Dimension)',
+      url: 'https://rickandmortyapi.com/api/location/20',
+    },
+    name: 'Alien Googah',
+    origin: { name: 'unknown', url: '' },
+    species: 'Alien',
+    status: 'unknown',
+    type: '',
   },
 ];
 
@@ -29,27 +42,21 @@ describe('CardList', () => {
   it('correct list', () => {
     render(<CardList cards={mockCardListData} />);
 
-    const cards = screen.getAllByTestId('game-card');
+    const cards = screen.getAllByTestId('character-card');
     expect(cards.length).toEqual(mockCardListData.length);
 
     for (let i = 0; i < cards.length; i++) {
       const card = cards[i];
 
-      const image = card.querySelector('[data-testid="game-card-image"]') as HTMLImageElement;
-      const title = card.querySelector('[data-testid="game-card-title"]');
-      const genres = card.querySelector('[data-testid="game-card-genres"]');
-      const price = card.querySelector('[data-testid="game-card-price"]');
+      const image = card.querySelector('[data-testid="character-card-image"]') as HTMLImageElement;
+      const name = card.querySelector('[data-testid="character-card-name"]');
 
       expect(image).toBeInTheDocument();
-      expect(title).toBeInTheDocument();
-      expect(genres).toBeInTheDocument();
-      expect(price).toBeInTheDocument();
+      expect(name).toBeInTheDocument();
 
       expect(image.src).toEqual(mockCardListData[i].image);
-      expect(image.alt).toEqual(mockCardListData[i].title);
-      expect(title).toHaveTextContent(mockCardListData[i].title);
-      expect(genres).toHaveTextContent(mockCardListData[i].genreList.join(', '));
-      expect(price).toHaveTextContent(`${mockCardListData[i].price} $`);
+      expect(image.alt).toEqual(mockCardListData[i].name);
+      expect(name).toHaveTextContent(mockCardListData[i].name);
     }
   });
 

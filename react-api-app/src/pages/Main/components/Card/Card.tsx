@@ -1,35 +1,31 @@
 import React from 'react';
+import { CharacterType } from 'types/CharacterType';
 
 import styles from './Card.module.scss';
 
 interface CardProps {
-  title: string;
-  image: string;
-  genreList: string[];
-  price: string;
+  data: CharacterType;
 }
 
 function Card(props: CardProps) {
+  const { data } = props;
+
   return (
-    <div className={styles['card']} data-testid="game-card">
+    <div className={styles['card']} data-testid="character-card">
       <div className={styles['image-container']}>
-        <img src={props.image} alt={props.title} data-testid="game-card-image" />
+        <img src={data.image} alt={data.name} data-testid="character-card-image" />
       </div>
       <div className={styles['content']}>
-        <h1 className={styles['title']} data-testid="game-card-title">
-          {props.title}
+        <h1 className={styles['name']} data-testid="character-card-name">
+          {data.name}
         </h1>
-        <div
-          className={styles['genres']}
-          title={props.genreList.join(', ')}
-          data-testid="game-card-genres"
-        >
-          {props.genreList.join(', ')}
-        </div>
-        <div className={styles['price-block']}>
-          <div className={styles['price']} data-testid="game-card-price">
-            {props.price} $
-          </div>
+        <div className={styles['btn-block']}>
+          <button className={styles['btn']}>
+            <svg>
+              <rect x="0" y="0" fill="none" width="100%" height="100%" />
+            </svg>
+            Show more
+          </button>
         </div>
       </div>
     </div>

@@ -3,63 +3,43 @@ import { render, screen } from '@testing-library/react';
 import Card from './Card';
 
 const mockCardData = {
-  title: 'Total War Rome',
-  image: 'https://cdn.cloudflare.steamstatic.com/steam/apps/885970/header.jpg?t=1622505859',
-  genreList: ['Strategy', 'RTS'],
-  price: 345,
+  gender: 'Male',
+  id: 1,
+  image: 'https://rickandmortyapi.com/api/character/avatar/1.jpeg',
+  location: { name: 'Citadel of Ricks', url: 'https://rickandmortyapi.com/api/location/3' },
+  name: 'Rick Sanchez',
+  origin: { name: 'Earth (C-137)', url: 'https://rickandmortyapi.com/api/location/1' },
+  species: 'Human',
+  status: 'Alive',
+  type: '',
 };
 
 describe('Card', () => {
   it('should be in document', () => {
-    render(
-      <Card
-        title={mockCardData.title}
-        image={mockCardData.image}
-        genreList={mockCardData.genreList}
-        price={`${mockCardData.price}`}
-      />
-    );
+    render(<Card data={mockCardData} />);
 
-    const card = screen.getByTestId('game-card');
+    const card = screen.getByTestId('character-card');
     expect(card).toBeInTheDocument();
   });
 
   it('correct data', () => {
-    render(
-      <Card
-        title={mockCardData.title}
-        image={mockCardData.image}
-        genreList={mockCardData.genreList}
-        price={`${mockCardData.price}`}
-      />
-    );
+    render(<Card data={mockCardData} />);
 
-    const image = screen.getByTestId('game-card-image') as HTMLImageElement;
-    const title = screen.getByTestId('game-card-title');
-    const genres = screen.getByTestId('game-card-genres');
-    const price = screen.getByTestId('game-card-price');
+    const image = screen.getByTestId('character-card-image') as HTMLImageElement;
+    const name = screen.getByTestId('character-card-name');
 
     expect(image.src).toEqual(mockCardData.image);
-    expect(image.alt).toEqual(mockCardData.title);
-    expect(title).toHaveTextContent(mockCardData.title);
-    expect(genres).toHaveTextContent(mockCardData.genreList.join(', '));
-    expect(price).toHaveTextContent(`${mockCardData.price} $`);
+    expect(image.alt).toEqual(mockCardData.name);
+    expect(name).toHaveTextContent(mockCardData.name);
   });
 
   it('long data', () => {
-    render(
-      <Card
-        title={'Title is very long !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!'}
-        image={mockCardData.image}
-        genreList={['Genre1', 'Genre2', 'Genre3', 'Genre4', 'Genre5']}
-        price={`${mockCardData.price}`}
-      />
-    );
+    const nameValue = 'Title is very long !!!!!!!!!!!!!!!!';
+    const obj = Object.assign(mockCardData, { name: nameValue });
+    render(<Card data={obj} />);
 
-    const title = screen.getByTestId('game-card-title');
-    const genres = screen.getByTestId('game-card-genres');
+    const name = screen.getByTestId('character-card-name');
 
-    expect(title).toHaveTextContent('Title is very long !!!!!!!!!!!!!!!!');
-    expect(genres).toHaveTextContent('Genre1, Genre2, Genre3, Genre4,');
+    expect(name).toHaveTextContent(nameValue);
   });
 });
