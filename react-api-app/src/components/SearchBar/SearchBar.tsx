@@ -30,7 +30,11 @@ function SearchBar(props: SearchBarProps) {
         defaultValue={''}
         type="text"
         className={styles['search__input']}
-        onChange={(e) => props.onChangeHandler(e.target.value)}
+        onKeyDown={(e) => {
+          if (e.key === 'Enter') {
+            props.onChangeHandler((e.target as HTMLInputElement).value);
+          }
+        }}
         data-testid="search-bar-input"
         ref={refInput}
       />
