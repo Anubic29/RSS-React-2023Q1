@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useEffect, useRef } from 'react';
-import { MdSearch } from 'react-icons/md';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
+import { MdSearch, MdClose } from 'react-icons/md';
 
 import styles from './SearchBar.module.scss';
 
@@ -9,6 +9,7 @@ interface SearchBarProps {
 }
 
 function SearchBar(props: SearchBarProps) {
+  const [canReset, setCanReset] = useState(false);
   const refInput = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
@@ -16,11 +17,21 @@ function SearchBar(props: SearchBarProps) {
     if (current) {
       current.value = localStorage.getItem('search') || '';
       props.onChangeHandler(current.value);
+      setCanReset(!!current.value);
     }
 
     return () => {
       localStorage.setItem('search', current?.value || '');
     };
+  }, []);
+
+  const resetSearchBar = useCallback(() => {
+    const current = refInput.current;
+    if (current) {
+      current.value = '';
+      props.onChangeHandler(current.value);
+      setCanReset(false);
+    }
   }, []);
 
   return (
@@ -29,15 +40,17 @@ function SearchBar(props: SearchBarProps) {
       <input
         defaultValue={''}
         type="text"
-        className={styles['search__input']}
+        className={`${styles['search__input']} ${canReset ? styles['reset'] : ''}`}
         onKeyDown={(e) => {
           if (e.key === 'Enter') {
             props.onChangeHandler((e.target as HTMLInputElement).value);
           }
         }}
+        onChange={(e) => setCanReset(!!e.target.value)}
         data-testid="search-bar-input"
         ref={refInput}
       />
+      {canReset && <MdClose className={styles['search__reset']} onClick={resetSearchBar} />}
     </div>
   );
 }

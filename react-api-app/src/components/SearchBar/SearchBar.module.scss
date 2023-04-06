@@ -2,6 +2,7 @@
 
 .search {
   position: relative;
+  width: 200px;
 
   &__icon {
     font-size: 2rem;
@@ -12,6 +13,7 @@
   }
 
   &__input {
+    width: 100%;
     background-color: transparent;
     color: $colorContentInput;
     border: 2px solid $colorBgInputDefault;
@@ -22,6 +24,24 @@
     &:focus {
       outline: none;
       border-color: $colorBgInputHover;
+    }
+
+    &.reset {
+      padding-right: 25px;
+    }
+  }
+
+  &__reset {
+    font-size: 2rem;
+    position: absolute;
+    top: 50%;
+    right: 5px;
+    transform: translate(0, -50%);
+    transition: color .3s ease;
+
+    &:hover {
+      cursor: pointer;
+      color: $colorDanger;
     }
   }
 }
