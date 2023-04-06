@@ -19,9 +19,16 @@ describe('SearchBar', () => {
 
     const input = getByTestId('search-bar-input');
     fireEvent.change(input, { target: { value: 'new search value' } });
+    fireEvent.keyDown(input, { key: 'Enter', code: 'Enter', charCode: 13 });
 
     expect(input).toHaveValue('new search value');
     expect(spy).toHaveBeenCalledWith('new search value');
+
+    const resetBtn = getByTestId('reset');
+    fireEvent.click(resetBtn);
+
+    expect(input).toHaveValue('');
+    expect(spy).toHaveBeenCalledWith('');
   });
 
   it('sets and gets the search value from local storage', () => {

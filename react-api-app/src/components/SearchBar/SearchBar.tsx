@@ -50,7 +50,9 @@ function SearchBar(props: SearchBarProps) {
         data-testid="search-bar-input"
         ref={refInput}
       />
-      {canReset && <MdClose className={styles['search__reset']} onClick={resetSearchBar} />}
+      {canReset && (
+        <MdClose className={styles['search__reset']} onClick={resetSearchBar} data-testid="reset" />
+      )}
     </div>
   );
 }
