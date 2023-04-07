@@ -2,7 +2,7 @@ import React from 'react';
 import { render, screen } from '@testing-library/react';
 import Preloader from './Preloader';
 
-describe('Select', () => {
+describe('Preloader', () => {
   it('should be in document', () => {
     render(<Preloader />);
 
