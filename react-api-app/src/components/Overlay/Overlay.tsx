@@ -10,11 +10,19 @@ interface OverlayProps {
 
 function Overlay(props: OverlayProps) {
   return (
-    <div className={styles['overlay']}>
-      <div className={styles['overlay__back']} onClick={props.onClose}></div>
+    <div className={styles['overlay']} data-testid="overlay">
+      <div
+        className={styles['overlay__back']}
+        data-testid="overlay-back"
+        onClick={props.onClose}
+      ></div>
       <div className={styles['overlay__modal']}>
         <div className={styles['btn-block']}>
-          <MdClose className={styles['btn-close']} onClick={props.onClose} />
+          <MdClose
+            className={styles['btn-close']}
+            onClick={props.onClose}
+            data-testid="overlay-close"
+          />
         </div>
         {props.children}
       </div>
