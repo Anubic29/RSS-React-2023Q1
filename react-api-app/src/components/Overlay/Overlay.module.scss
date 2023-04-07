@@ -1,0 +1,39 @@
+.overlay {
+  position: fixed;
+  z-index: 999999;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 100vw;
+
+  &__back {
+    background-color: rgba(0, 0, 0, 0.5);
+    width: 100%;
+    height: 100%;
+  }
+
+  &__modal {
+    width: 300px;
+    min-height: 450px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    border-radius: 5px;
+  }
+
+  .btn-block {
+    padding: 5px;
+    display: flex;
+    justify-content: flex-end;
+  }
+
+  .btn-close {
+    font-size: 2rem;
+
+    &:hover {
+      cursor: pointer;
+    }
+  }
+}

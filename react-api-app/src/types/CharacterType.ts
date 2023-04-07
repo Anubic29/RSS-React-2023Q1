@@ -1,4 +1,4 @@
-type propertyCharacterType = {
+export type PropertyCharacterType = {
   name: string;
   url: string;
 };
@@ -11,6 +11,10 @@ export type CharacterType = {
   type: string;
   gender: string;
   image: string;
-  origin: propertyCharacterType;
-  location: propertyCharacterType;
+  origin: PropertyCharacterType;
+  location: PropertyCharacterType;
+
+  created: string;
+  url: string;
+  episode: string[];
 };
