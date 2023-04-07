@@ -13,7 +13,6 @@ function CharacterModal(props: CharacterModalProps) {
   const displayData = useMemo(() => {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { id, image, name, url, episode, created, ...rest } = data;
-    console.log(rest);
     return rest;
   }, [data]);
 
