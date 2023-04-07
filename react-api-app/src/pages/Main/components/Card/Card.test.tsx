@@ -3,6 +3,8 @@ import { render, screen } from '@testing-library/react';
 import Card from './Card';
 
 const mockCardData = {
+  created: '2017-11-04T18:48:46.250Z',
+  episode: ['https://rickandmortyapi.com/api/episode/1'],
   gender: 'Male',
   id: 1,
   image: 'https://rickandmortyapi.com/api/character/avatar/1.jpeg',
@@ -12,6 +14,7 @@ const mockCardData = {
   species: 'Human',
   status: 'Alive',
   type: '',
+  url: 'https://rickandmortyapi.com/api/character/1',
 };
 
 describe('Card', () => {

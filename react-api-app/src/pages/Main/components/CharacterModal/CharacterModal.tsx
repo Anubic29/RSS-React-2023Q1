@@ -11,7 +11,6 @@ function CharacterModal(props: CharacterModalProps) {
   const { data } = props;
 
   const displayData = useMemo(() => {
-    // const unusedProps = ['id', 'image', 'name', 'url', 'episode', 'created'];
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { id, image, name, url, episode, created, ...rest } = data;
     console.log(rest);
@@ -19,7 +18,7 @@ function CharacterModal(props: CharacterModalProps) {
   }, [data]);
 
   return (
-    <div className={styles['modal']}>
+    <div className={styles['modal']} data-testid="character-modal">
       <div className={styles['image-block']}>
         <img className={styles['image']} src={data.image} alt={data.name} />
       </div>
