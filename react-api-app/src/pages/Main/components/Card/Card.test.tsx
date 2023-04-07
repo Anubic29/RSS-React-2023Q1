@@ -1,6 +1,7 @@
 import React from 'react';
-import { render, screen } from '@testing-library/react';
+import { fireEvent, render, screen } from '@testing-library/react';
 import Card from './Card';
+import { OverlayProvider, useOverlay } from '../../../../contexts';
 
 const mockCardData = {
   created: '2017-11-04T18:48:46.250Z',
@@ -44,5 +45,27 @@ describe('Card', () => {
     const name = screen.getByTestId('character-card-name');
 
     expect(name).toHaveTextContent(nameValue);
+  });
+
+  it('clicking on the card image opens the character modal', () => {
+    const TestComponent = () => {
+      const overlay = useOverlay();
+      return (
+        <>
+          <Card data={mockCardData} />
+          {overlay.isVisible && <div data-testid="character-modal"></div>}
+        </>
+      );
+    };
+
+    const { getByTestId } = render(
+      <OverlayProvider>
+        <TestComponent />
+      </OverlayProvider>
+    );
+
+    const image = getByTestId('character-card-image');
+    fireEvent.click(image);
+    expect(getByTestId('character-modal')).toBeInTheDocument();
   });
 });
