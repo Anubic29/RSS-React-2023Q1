@@ -5,6 +5,8 @@ import { CharacterType } from 'types/CharacterType';
 
 const mockCardListData: CharacterType[] = [
   {
+    created: '2017-11-04T18:48:46.250Z',
+    episode: ['https://rickandmortyapi.com/api/episode/1'],
     gender: 'Male',
     id: 1,
     image: 'https://rickandmortyapi.com/api/character/avatar/1.jpeg',
@@ -14,8 +16,11 @@ const mockCardListData: CharacterType[] = [
     species: 'Human',
     status: 'Alive',
     type: '',
+    url: 'https://rickandmortyapi.com/api/character/1',
   },
   {
+    created: '2017-11-04T20:33:30.779Z',
+    episode: ['https://rickandmortyapi.com/api/episode/31'],
     gender: 'unknown',
     id: 13,
     image: 'https://rickandmortyapi.com/api/character/avatar/13.jpeg',
@@ -28,6 +33,7 @@ const mockCardListData: CharacterType[] = [
     species: 'Alien',
     status: 'unknown',
     type: '',
+    url: 'https://rickandmortyapi.com/api/character/13',
   },
 ];
 
