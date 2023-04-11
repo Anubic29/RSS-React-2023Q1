@@ -47,18 +47,18 @@ describe('Card', () => {
     expect(name).toHaveTextContent(nameValue);
   });
 
-  it('clicking on the card image opens the character modal', () => {
+  it('open character modal', async () => {
     const TestComponent = () => {
       const overlay = useOverlay();
       return (
         <>
           <Card data={mockCardData} />
-          {overlay.isVisible && <div data-testid="character-modal"></div>}
+          {overlay.isVisible && <div>{overlay.contentOverlay}</div>}
         </>
       );
     };
 
-    const { getByTestId } = render(
+    const { getByTestId, findByTestId } = render(
       <OverlayProvider>
         <TestComponent />
       </OverlayProvider>
@@ -66,6 +66,32 @@ describe('Card', () => {
 
     const image = getByTestId('character-card-image');
     fireEvent.click(image);
-    expect(getByTestId('character-modal')).toBeInTheDocument();
+
+    const modalContent = await findByTestId('character-modal');
+    expect(modalContent).toBeInTheDocument();
+  });
+
+  it('open character modal with error', async () => {
+    const TestComponent = () => {
+      const overlay = useOverlay();
+      return (
+        <>
+          <Card data={{ ...mockCardData, id: 2 }} />
+          {overlay.isVisible && <div>{overlay.contentOverlay}</div>}
+        </>
+      );
+    };
+
+    const { getByTestId, findByText } = render(
+      <OverlayProvider>
+        <TestComponent />
+      </OverlayProvider>
+    );
+
+    const image = getByTestId('character-card-image');
+    fireEvent.click(image);
+
+    const modalContent = await findByText('Network Error');
+    expect(modalContent).toBeInTheDocument();
   });
 });

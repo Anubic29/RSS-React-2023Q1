@@ -54,4 +54,10 @@ export const handlers = [
       return res(ctx.status(500));
     }
   }),
+  rest.get('https://rickandmortyapi.com/api/character/1', (req, res, ctx) => {
+    return res(ctx.status(200), ctx.json(characterArr[0]));
+  }),
+  rest.get('https://rickandmortyapi.com/api/character/2', (req, res, ctx) => {
+    return res(ctx.status(400));
+  }),
 ];
