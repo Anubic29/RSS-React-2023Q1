@@ -10,6 +10,13 @@ describe('Preloader', () => {
     expect(preloader).toBeInTheDocument();
   });
 
+  it('preloader with invert', () => {
+    render(<Preloader invert={true} />);
+
+    const preloader = screen.getByTestId('preloader');
+    expect(preloader.className).toEqual(expect.stringMatching(/_invert_/));
+  });
+
   it('with text', () => {
     render(<Preloader text="text" />);
 
