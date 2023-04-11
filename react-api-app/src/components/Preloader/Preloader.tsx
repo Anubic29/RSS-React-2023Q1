@@ -9,12 +9,13 @@ const PRELOADER_HEIGHT = {
 
 interface PreloaderProps {
   text?: string;
+  invert?: boolean;
 }
 
 function Preloader(props: PreloaderProps) {
   return (
     <div
-      className={styles['preloader']}
+      className={props.invert ? `${styles['preloader']} ${styles['invert']}` : styles['preloader']}
       style={{ height: props.text ? PRELOADER_HEIGHT.withText : PRELOADER_HEIGHT.withoutText }}
       data-testid="preloader"
     >

@@ -24,7 +24,7 @@ function Overlay(props: OverlayProps) {
             data-testid="overlay-close"
           />
         </div>
-        {props.children}
+        <div className={styles['content']}>{props.children}</div>
       </div>
     </div>
   );

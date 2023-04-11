@@ -22,5 +22,8 @@ export default function (instance: AxiosInstance) {
       }
       return instance.get<ApiResponseType>(route);
     },
+    getData(id: number) {
+      return instance.get<CharacterType>(`character/${id}`);
+    },
   };
 }

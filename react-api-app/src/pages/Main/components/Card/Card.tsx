@@ -2,6 +2,8 @@ import React, { useCallback } from 'react';
 import { CharacterType } from 'types/CharacterType';
 import { useOverlay } from '../../../../contexts';
 import { CharacterModal } from '../';
+import { Preloader } from '../../../../components';
+import api from '../../../../api';
 
 import styles from './Card.module.scss';
 
@@ -13,9 +15,15 @@ function Card(props: CardProps) {
   const { data } = props;
   const { setIsVisible, setContentOverlay } = useOverlay();
 
-  const openModal = useCallback(() => {
-    setContentOverlay(<CharacterModal data={data} />);
+  const openModal = useCallback(async () => {
+    setContentOverlay(<Preloader invert={true} />);
     setIsVisible(true);
+    try {
+      const response = await api.character.getData(data.id);
+      setContentOverlay(<CharacterModal data={response.data} />);
+    } catch (error) {
+      setContentOverlay(<h1>Network Error</h1>);
+    }
   }, [setIsVisible, setContentOverlay, data]);
 
   return (

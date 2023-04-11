@@ -10,6 +10,10 @@ $colorFour: rgba(255, 255, 255, 0.8);
   align-items: center;
   gap: 12px;
   height: 40px;
+
+  &.invert {
+    filter: invert(1);
+  }
 }
 
 .preloader-text {
