@@ -51,14 +51,15 @@ describe('SearchBar', () => {
 
     localStorage.setItem('search', 'stored value');
 
-    const { getByTestId, unmount } = render(<SearchBar onChangeHandler={() => {}} />);
+    const { getByTestId } = render(<SearchBar onChangeHandler={() => {}} />);
 
     const input = getByTestId('search-bar-input');
     expect(input).toHaveValue('stored value');
 
     fireEvent.change(input, { target: { value: 'new search value' } });
+    fireEvent.keyDown(input, { key: 'Enter', code: 'Enter', charCode: 13 });
+
     expect(input).toHaveValue('new search value');
-    unmount();
     expect(localStorage.getItem('search')).toBe('new search value');
   });
 });

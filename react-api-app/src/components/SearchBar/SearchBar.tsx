@@ -19,10 +19,14 @@ function SearchBar(props: SearchBarProps) {
       props.onChangeHandler(current.value);
       setCanReset(!!current.value);
     }
+  }, []);
 
-    return () => {
-      localStorage.setItem('search', current?.value || '');
-    };
+  const enterValue = useCallback((event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === 'Enter') {
+      const target = event.target as HTMLInputElement;
+      props.onChangeHandler(target.value);
+      localStorage.setItem('search', target.value);
+    }
   }, []);
 
   const resetSearchBar = useCallback(() => {
@@ -41,11 +45,7 @@ function SearchBar(props: SearchBarProps) {
         defaultValue={''}
         type="text"
         className={`${styles['search__input']} ${canReset ? styles['reset'] : ''}`}
-        onKeyDown={(e) => {
-          if (e.key === 'Enter') {
-            props.onChangeHandler((e.target as HTMLInputElement).value);
-          }
-        }}
+        onKeyDown={enterValue}
         onChange={(e) => setCanReset(!!e.target.value)}
         data-testid="search-bar-input"
         ref={refInput}
