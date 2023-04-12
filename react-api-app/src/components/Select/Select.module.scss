@@ -1,0 +1,41 @@
+@import "../../theme/variables.scss";
+
+.select-block {
+  position: relative;
+}
+
+.select {
+  width: 250px;
+  padding: 5px 10px;
+  background-color: transparent;
+  color: $colorContentInput;
+  border: 2px solid $colorBgInputDefault;
+  border-radius: 5px;
+
+  &:focus {
+    outline: none;
+    border-color: $colorBgInputHover;
+  }
+
+  &::-webkit-calendar-picker-indicator {
+    filter: invert(1);
+  }
+
+  option {
+    color: black;
+  }
+
+  &-invalid {
+    border-color: $colorInvalidInput !important;
+  }
+}
+
+.invalid-message {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  transform: translate(0, 110%);
+  font-size: 12px;
+  color: $colorInvalidInput;
+  padding-right: 10px;
+}
