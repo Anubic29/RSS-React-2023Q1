@@ -12,10 +12,10 @@ interface SearchBarProps {
 }
 
 function SearchBar(props: SearchBarProps) {
-  const [canReset, setCanReset] = useState(false);
-  const refInput = useRef<HTMLInputElement>(null);
   const value = useSelector((state: RootState) => state.searchBar.value);
   const dispatch = useDispatch();
+  const [canReset, setCanReset] = useState(false);
+  const refInput = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     const current = refInput.current;

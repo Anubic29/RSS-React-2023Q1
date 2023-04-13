@@ -1,18 +1,19 @@
 import React from 'react';
-import { fireEvent, render, screen } from '@testing-library/react';
+import { fireEvent, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import { renderWithProviders } from '../../utils/test-utils';
 import Form from './Form';
 
 function setup(jsx: JSX.Element) {
   return {
     user: userEvent.setup(),
-    ...render(jsx),
+    ...renderWithProviders(jsx),
   };
 }
 
 describe('Form page', () => {
   it('should be in document', () => {
-    render(<Form />);
+    renderWithProviders(<Form />);
 
     const formPage = screen.getByTestId('form-page');
     expect(formPage).toBeInTheDocument();

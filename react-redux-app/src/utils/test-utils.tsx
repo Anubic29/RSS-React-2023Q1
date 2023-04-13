@@ -6,6 +6,7 @@ import type { PreloadedState } from '@reduxjs/toolkit';
 import { Provider } from 'react-redux';
 
 import type { AppStore, RootState } from '../redux/store';
+import formCardListSlice from '../redux/formCardListSlice';
 import searchBarSlice from '../redux/searchBarSlice';
 
 interface ExtendedRenderOptions extends Omit<RenderOptions, 'queries'> {
@@ -17,7 +18,10 @@ export function renderWithProviders(
   ui: React.ReactElement,
   {
     preloadedState = {},
-    store = configureStore({ reducer: { searchBar: searchBarSlice }, preloadedState }),
+    store = configureStore({
+      reducer: { formCardList: formCardListSlice, searchBar: searchBarSlice },
+      preloadedState,
+    }),
     ...renderOptions
   }: ExtendedRenderOptions = {}
 ) {

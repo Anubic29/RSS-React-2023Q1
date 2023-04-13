@@ -1,9 +1,11 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import type { PreloadedState } from '@reduxjs/toolkit';
 
+import formCardListSlice from './formCardListSlice';
 import searchBarSlice from './searchBarSlice';
 
 const rootReducer = combineReducers({
+  formCardList: formCardListSlice,
   searchBar: searchBarSlice,
 });
 

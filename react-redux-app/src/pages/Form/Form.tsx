@@ -1,5 +1,8 @@
 import React, { useCallback, useMemo, useState } from 'react';
 import { SubmitHandler, useForm, FieldValues } from 'react-hook-form';
+import type { RootState } from '../../redux/store';
+import { useSelector, useDispatch } from 'react-redux';
+import { addCard } from '../../redux/formCardListSlice';
 import { Input, Select } from '../../components';
 import { FormCardList } from './components';
 import { FormCardType } from 'types/CardType';
@@ -7,8 +10,9 @@ import { FormCardType } from 'types/CardType';
 import styles from './Form.module.scss';
 
 function Form() {
+  const cards = useSelector((state: RootState) => state.formCardList.value);
+  const dispatch = useDispatch();
   const { register, handleSubmit, reset } = useForm();
-  const [cards, setCards] = useState<FormCardType[]>([]);
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
   const [saved, setSaved] = useState(false);
 
@@ -59,7 +63,7 @@ function Form() {
           file: data['file'].length > 0 ? data['file'][0]['name'] : 'None',
         };
 
-        setCards((prev) => prev.concat([card]));
+        dispatch(addCard(card));
         setSaved(true);
         setTimeout(() => {
           setSaved(false);
@@ -67,7 +71,7 @@ function Form() {
         reset();
       }
     },
-    [validateForm, reset]
+    [validateForm, reset, dispatch]
   );
 
   return (
