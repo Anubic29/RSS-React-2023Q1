@@ -1,6 +1,9 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { MdSearch, MdClose } from 'react-icons/md';
+import type { RootState } from '../../redux/store';
+import { useSelector, useDispatch } from 'react-redux';
+import { change, reset } from '../../redux/searchBarSlice';
 
 import styles from './SearchBar.module.scss';
 
@@ -11,21 +14,26 @@ interface SearchBarProps {
 function SearchBar(props: SearchBarProps) {
   const [canReset, setCanReset] = useState(false);
   const refInput = useRef<HTMLInputElement>(null);
+  const value = useSelector((state: RootState) => state.searchBar.value);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     const current = refInput.current;
     if (current) {
-      current.value = localStorage.getItem('search') || '';
-      props.onChangeHandler(current.value);
+      current.value = value;
       setCanReset(!!current.value);
     }
   }, []);
 
+  useEffect(() => {
+    console.log(value);
+    props.onChangeHandler(value);
+  }, [value]);
+
   const enterValue = useCallback((event: React.KeyboardEvent<HTMLInputElement>) => {
     if (event.key === 'Enter') {
       const target = event.target as HTMLInputElement;
-      props.onChangeHandler(target.value);
-      localStorage.setItem('search', target.value);
+      dispatch(change(target.value));
     }
   }, []);
 
@@ -33,7 +41,7 @@ function SearchBar(props: SearchBarProps) {
     const current = refInput.current;
     if (current) {
       current.value = '';
-      props.onChangeHandler(current.value);
+      dispatch(reset());
       setCanReset(false);
     }
   }, []);
