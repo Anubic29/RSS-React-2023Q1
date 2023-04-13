@@ -6,6 +6,7 @@ import type { PreloadedState } from '@reduxjs/toolkit';
 import { Provider } from 'react-redux';
 
 import type { AppStore, RootState } from '../redux/store';
+import characterArrSlice from '../redux/characterArrSlice';
 import formCardListSlice from '../redux/formCardListSlice';
 import searchBarSlice from '../redux/searchBarSlice';
 
@@ -19,7 +20,11 @@ export function renderWithProviders(
   {
     preloadedState = {},
     store = configureStore({
-      reducer: { formCardList: formCardListSlice, searchBar: searchBarSlice },
+      reducer: {
+        characterArr: characterArrSlice,
+        formCardList: formCardListSlice,
+        searchBar: searchBarSlice,
+      },
       preloadedState,
     }),
     ...renderOptions

@@ -1,29 +1,25 @@
 import React, { useCallback, useState } from 'react';
-import api from '../../api';
+import type { AppDispatch, RootState } from '../../redux/store';
+import { useSelector, useDispatch } from 'react-redux';
+import { fetchCharactersByTitle } from '../../redux/characterArrSlice';
 import { CardList } from './components';
 import { Preloader, SearchBar } from '../../components/';
-import { CharacterType } from 'types/CharacterType';
 
 import styles from './Main.module.scss';
 
 function Main() {
+  const characterArr = useSelector((state: RootState) => state.characterArr.value);
+  const dispatch: AppDispatch = useDispatch();
   const [isLoaderActive, setIsLoaderActive] = useState(false);
-  const [characterArr, setCharacterArr] = useState<CharacterType[]>([]);
 
-  const updateList = useCallback(async (value: string) => {
-    setIsLoaderActive(true);
-    try {
-      const response = await api.character.getDataAll(value);
-      const data = response.data;
-      if (data) {
-        setCharacterArr(response.data.results);
-      }
-    } catch (error) {
-      setCharacterArr([]);
-    } finally {
+  const updateList = useCallback(
+    async (value: string) => {
+      setIsLoaderActive(true);
+      await dispatch(fetchCharactersByTitle(value));
       setIsLoaderActive(false);
-    }
-  }, []);
+    },
+    [dispatch]
+  );
 
   return (
     <div className={styles['main']} data-testid="main-page">
