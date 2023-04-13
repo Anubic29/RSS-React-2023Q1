@@ -1,11 +1,12 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
+import { renderWithProviders } from '../utils/test-utils';
 import Routing from './Routing';
 
 describe('Routing', () => {
   it('renders Main component on root path', () => {
-    render(
+    renderWithProviders(
       <MemoryRouter initialEntries={['']}>
         <Routing />
       </MemoryRouter>

@@ -26,7 +26,6 @@ function SearchBar(props: SearchBarProps) {
   }, []);
 
   useEffect(() => {
-    console.log(value);
     props.onChangeHandler(value);
   }, [value]);
 

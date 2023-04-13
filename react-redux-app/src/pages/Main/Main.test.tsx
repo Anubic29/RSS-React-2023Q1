@@ -1,11 +1,12 @@
 import React from 'react';
-import { fireEvent, render, screen } from '@testing-library/react';
+import { fireEvent, screen } from '@testing-library/react';
 import { BrowserRouter } from 'react-router-dom';
+import { renderWithProviders } from '../../utils/test-utils';
 import Main from './Main';
 
 describe('Main', () => {
   it('should be in document', () => {
-    render(
+    renderWithProviders(
       <BrowserRouter>
         <Main />
       </BrowserRouter>
@@ -22,7 +23,7 @@ describe('Main', () => {
   });
 
   it('correct data get from api', async () => {
-    const { findAllByTestId } = render(
+    const { findAllByTestId } = renderWithProviders(
       <BrowserRouter>
         <Main />
       </BrowserRouter>
@@ -32,7 +33,7 @@ describe('Main', () => {
   });
 
   it('filter cards based on random value', async () => {
-    const { findByTestId } = render(
+    const { findByTestId } = renderWithProviders(
       <BrowserRouter>
         <Main />
       </BrowserRouter>
