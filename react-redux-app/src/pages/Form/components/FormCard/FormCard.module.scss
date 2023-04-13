@@ -1,0 +1,48 @@
+@import "../../../../theme/variables.scss";
+
+.card {
+  display: flex;
+  flex-direction: column;
+  width: 200px;
+  border: 2px solid $colorBgInputDefault;
+  border-radius: 10px;
+  overflow: hidden;
+  padding-bottom: 10px;
+
+  .title-block {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 10px;
+    background-color: $colorBgInputDefault;
+
+    .title {
+      color: $colorAccentText;
+    }
+  }
+
+  .param-list {
+    padding: 0 10px;
+
+    .param {
+      list-style: none;
+      display: flex;
+      justify-content: space-between;
+      font-size: 14px;
+      border-bottom: 2px solid $colorText;
+      margin-bottom: 8px;
+
+      .subtitle {
+        text-transform: uppercase;
+        margin-right: 5px;
+      }
+
+      .value {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        max-width: 100px;
+      }
+    }
+  }
+}

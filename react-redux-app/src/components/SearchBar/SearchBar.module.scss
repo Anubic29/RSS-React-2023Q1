@@ -1,0 +1,47 @@
+@import "../../theme/variables.scss";
+
+.search {
+  position: relative;
+  width: 200px;
+
+  &__icon {
+    font-size: 2rem;
+    position: absolute;
+    top: 50%;
+    left: 5px;
+    transform: translate(0, -50%);
+  }
+
+  &__input {
+    width: 100%;
+    background-color: transparent;
+    color: $colorContentInput;
+    border: 2px solid $colorBgInputDefault;
+    border-radius: 15px;
+    padding: 5px 10px;
+    padding-left: 25px;
+
+    &:focus {
+      outline: none;
+      border-color: $colorBgInputHover;
+    }
+
+    &.reset {
+      padding-right: 25px;
+    }
+  }
+
+  &__reset {
+    font-size: 2rem;
+    position: absolute;
+    top: 50%;
+    right: 5px;
+    transform: translate(0, -50%);
+    transition: color .3s ease;
+
+    &:hover {
+      cursor: pointer;
+      color: $colorDanger;
+    }
+  }
+}
