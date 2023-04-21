@@ -1,28 +1,43 @@
-import express from 'express';
 import fs from 'fs';
 import path from 'path';
-
-// import React from 'react';
-// import ReactDOMServer from 'react-dom/server';
-
-// import App from '../src/App';
+import { fileURLToPath } from 'url';
+import express from 'express';
+import { createServer as createViteServer } from 'vite';
 
 const PORT = 8000;
 
-const app = express();
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
-app.get('/', (req, res) => {
-  fs.readFile(path.resolve('./index.html'), 'utf-8', (error, data) => {
-    if (error) {
-      console.log(error);
-      return res.status(500).send('Some error happend');
-    }
-    return res.send(
-      data.replace('<div id="root"></div>', `<div id="root"><h1>Main Page</h1></div>`)
-    );
+async function createServer() {
+  const app = express();
+
+  const vite = await createViteServer({
+    server: { middlewareMode: true },
+    appType: 'custom',
   });
-});
 
-app.listen(PORT, () => {
-  console.log(`Server started on http://localhost:${PORT}`);
-});
+  app.use(vite.middlewares);
+
+  app.use('*', async (req, res, next) => {
+    const url = req.originalUrl;
+
+    try {
+      let template = fs.readFileSync(path.resolve(__dirname, '../index.html'), 'utf-8');
+      template = await vite.transformIndexHtml(url, template);
+      const { render } = await vite.ssrLoadModule('/src/entry-server.tsx');
+      const appHtml = await render(url);
+      const html = template.replace(`<!--ssr-outlet-->`, appHtml);
+      res.status(200).set({ 'Content-Type': 'text/html' }).end(html);
+    } catch (e) {
+      vite.ssrFixStacktrace(e);
+      console.log(e);
+      next(e);
+    }
+  });
+
+  app.listen(PORT, () => {
+    console.log(`Server started on http://localhost:${PORT}`);
+  });
+}
+
+createServer();
