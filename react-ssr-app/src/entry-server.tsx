@@ -8,12 +8,9 @@ interface IRenderProps {
 }
 
 export const render = ({ path }: IRenderProps) => {
-  console.log(path);
   return ReactDOMServer.renderToPipeableStream(
-    // <App />
-    <h1>Hello</h1>
-    // <StaticRouter location={path}>
-    //   <App />
-    // </StaticRouter>
+    <StaticRouter location={path}>
+      <App />
+    </StaticRouter>
   );
 };

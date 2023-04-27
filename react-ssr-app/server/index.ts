@@ -40,7 +40,6 @@ async function createServer() {
       appHtml.pipe(writableStream);
       writableStream.on('finish', () => {
         const textContent = buffer.join('').toString();
-        console.log(textContent);
         const html = template.replace(`<!--ssr-outlet-->`, textContent);
         res.status(200).set({ 'Content-Type': 'text/html' }).end(html);
       });
