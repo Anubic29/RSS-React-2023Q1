@@ -1,13 +1,14 @@
 /// <reference types="cypress" />
 
-context('Next App', () => {
-  it('visit the home page', () => {
+context('App', () => {
+  it('routing', () => {
     cy.visit('/');
-    cy.contains('Search:');
-  });
+    cy.get('[class*="_link_"][class*="_active_"]').contains('Main');
 
-  it('visit the about page', () => {
-    cy.visit('/about');
-    cy.contains('About content');
+    cy.get('[class*="_link_"]').contains('About').click();
+    cy.get('[class*="_link_"][class*="_active_"]').contains('About');
+
+    cy.get('[class*="_link_"]').contains('Form').click();
+    cy.get('[class*="_link_"][class*="_active_"]').contains('Form');
   });
 });

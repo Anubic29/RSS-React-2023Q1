@@ -8,7 +8,7 @@ context('Form page', () => {
 
   it('form page contains 7 labels', () => {
     cy.visit('/form');
-    cy.get('form').find('[class^="_label_"]').should('have.length', 7);
+    cy.get('form').find('[class*="_label_"]').should('have.length', 7);
   });
 
   it('form page create card', () => {
@@ -20,6 +20,6 @@ context('Form page', () => {
     cy.get('button[type="submit"]').click();
 
     cy.get('[data-testid="saved-text"]').contains('Saved');
-    cy.get('[class^="_card-list_"]').find('[data-testid="form-card"]').should('have.length', 1);
+    cy.get('[class*="_card-list_"]').find('[data-testid="form-card"]').should('have.length', 1);
   });
 });
