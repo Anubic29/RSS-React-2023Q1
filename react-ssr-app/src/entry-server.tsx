@@ -11,7 +11,6 @@ interface IRenderProps {
 
 export const render = async ({ path }: IRenderProps) => {
   const store = setupStore();
-  console.log(store.getState());
   const preloadedState = store.getState();
   const injectPreload = () => `
   <script>
