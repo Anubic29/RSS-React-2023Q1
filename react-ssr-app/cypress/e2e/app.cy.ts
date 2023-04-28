@@ -1,3 +1,5 @@
+/// <reference types="cypress" />
+
 context('Next App', () => {
   it('visit the home page', () => {
     cy.visit('/');

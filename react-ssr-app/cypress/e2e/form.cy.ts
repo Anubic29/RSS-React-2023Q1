@@ -1,3 +1,5 @@
+/// <reference types="cypress" />
+
 context('Form page', () => {
   it('visit the form page', () => {
     cy.visit('/form');
@@ -19,6 +21,5 @@ context('Form page', () => {
 
     cy.get('[data-testid="saved-text"]').contains('Saved');
     cy.get('[class^="_card-list_"]').find('[data-testid="form-card"]').should('have.length', 1);
-    // cy.get('form').find('[class^="_label_"]').should('have.length', 7);
   });
 });
