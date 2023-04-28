@@ -9,8 +9,17 @@ interface IRenderProps {
   path: string;
 }
 
-export const render = ({ path }: IRenderProps) => {
-  return ReactDOMServer.renderToPipeableStream(
+export const render = async ({ path }: IRenderProps) => {
+  const store = setupStore();
+  console.log(store.getState());
+  const preloadedState = store.getState();
+  const injectPreload = () => `
+  <script>
+  window.__PRELOADED_STATE__ = ${JSON.stringify(preloadedState).replace(/</g, '\\u003c')}
+  </script>
+  `;
+
+  const stream = ReactDOMServer.renderToPipeableStream(
     <React.StrictMode>
       <Provider store={setupStore()}>
         <StaticRouter location={path}>
@@ -19,4 +28,6 @@ export const render = ({ path }: IRenderProps) => {
       </Provider>
     </React.StrictMode>
   );
+
+  return { stream, injectPreload };
 };

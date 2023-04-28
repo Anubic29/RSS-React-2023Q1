@@ -35,12 +35,16 @@ async function createServer() {
       let template = fs.readFileSync(path.resolve(__dirname, '../index.html'), 'utf-8');
       template = await vite.transformIndexHtml(url, template);
       const { render } = await vite.ssrLoadModule('/src/entry-server.tsx');
-      const appHtml = (await render({ path: url })) as ReactDOMServer.PipeableStream;
+      const { stream, injectPreload } = (await render({ path: url })) as {
+        stream: ReactDOMServer.PipeableStream;
+        injectPreload: () => string;
+      };
 
-      appHtml.pipe(writableStream);
+      stream.pipe(writableStream);
       writableStream.on('finish', () => {
         const textContent = buffer.join('').toString();
-        const html = template.replace(`<!--ssr-outlet-->`, textContent);
+        const temp = template.replace(`<!--ssr-outlet-->`, textContent);
+        const html = temp.replace('<!--preloaded-state-->', injectPreload());
         res.status(200).set({ 'Content-Type': 'text/html' }).end(html);
       });
     } catch (e) {
